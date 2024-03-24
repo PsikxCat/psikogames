@@ -2,32 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: #332a28;
+    --foreground: #f7f7f7;
+
+    --card: #332a28;
+    --card-foreground: #f7f7f7;
+
+    --popover: #332a28;
+    --popover-foreground: #f7f7f7;
+
+    --primary: #f7f7f7;
+    --primary-foreground: #271a19;
+
+    --secondary: #1e262e;
+    --secondary-foreground: #f7f7f7;
+
+    --muted: #1e262e;
+    --muted-foreground: #1f3453;
+
+    --accent: #1e262e;
+    --accent-foreground: #f7f7f7;
+
+    --destructive: #9b4221;
+    --destructive-foreground: #f7f7f7;
+
+    --border: #1e262e;
+    --input: #1e262e;
+    --ring: #271e22;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  *,
+  *::after,
+  *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    color: var(--foreground);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: repeat;
+    background-image: url('/bgImage.svg');
+    }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .flex_center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex_center_column {
+    @apply flex flex-col justify-center items-center;
   }
 }
