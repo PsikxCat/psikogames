@@ -1,22 +1,16 @@
-import { HomeButtons } from '@/components'
-import Image from 'next/image'
-import React from 'react'
+import { HomeButtons, Logo } from '@/components'
 
 export default function HomePage() {
   return (
     <main className="flex h-screen flex-col items-center justify-between gap-5">
       <div className='min-w-[400px] pt-20'>
-        <Image
-          src={'/psikogames-logo.webp'}
-          alt="psikogames logo"
-          width={500}
-          height={500}
-          priority
-        />
+        <Logo size='xl' />
       </div>
 
       <div className='flex-1 w-full flex flex-col items-center justify-evenly pb-28'>
-        <h1 className='py-5 tracking-wider text-2xl text-primary uppercase font-bold'>Bienvenido extraño</h1>
+        <h1 className='py-5 tracking-wider text-2xl text-primary uppercase font-bold'>
+          Bienvenido Richard
+        </h1>
         <HomeButtons />
       </div>
 

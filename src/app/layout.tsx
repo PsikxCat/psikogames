@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Orbitron } from 'next/font/google'
 
 import './globals.css'
+import { cn } from '@/lib/utils'
 
 const orbitron = Orbitron({ subsets: ['latin'] })
 
@@ -17,8 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={orbitron.className}>
-        {children}
+      <body className={cn(
+        'h-[100svh] w-full flex_center_column tracking-wider',
+        orbitron.className
+      )}>
+        <main className='wrapper h-full'>
+          {children}
+        </main>
       </body>
     </html>
   )

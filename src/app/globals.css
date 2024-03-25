@@ -20,7 +20,7 @@
     --background: #332a28;
     --foreground: #f7f7f7;
 
-    --card: #332a28;
+    --card: #292524;
     --card-foreground: #f7f7f7;
 
     --popover: #332a28;
@@ -38,12 +38,14 @@
     --accent: #D74309;
     --accent-foreground: #252323;
 
-    --destructive: #9b4221;
+    --destructive: #D74309;
     --destructive-foreground: #252323;
 
     --border: #78716E;
     --input: #78716E;
     --ring: #271e22;
+
+    --radius: 0.5rem;
   }
 }
 
@@ -74,6 +76,10 @@
     @apply flex flex-col justify-center items-center;
   }
 
+  .wrapper {
+    @apply w-full max-w-3xl flex_center py-12 px-3 md:px-8;
+  }
+
   .bg_orange_gradient {
     @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--orange-light)] to-[var(--red-light)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
   }
@@ -84,6 +90,10 @@
 
   .bg_dark_gradient {
     @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--dark-light)] to-[var(--dark)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
+  }
+
+  .bg_dark_gradient_2 {
+    @apply bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-[var(--dark)] to-[var(--dark-dark)]
   }
 
   .btn_default {

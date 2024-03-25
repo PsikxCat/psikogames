@@ -1,10 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 
 import { Spinner } from '@/components'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
 
 export default function HomeButtons() {
   const [isPending, setIsPending] = useState(false)
@@ -29,7 +29,7 @@ export default function HomeButtons() {
         </Button>
 
         <Button variant="red" size='sm' asChild>
-          <Link href='/'>logout</Link>
+          <Link href='/auth/login'>salir</Link>
         </Button>
 
         <Button

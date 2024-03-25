@@ -18,6 +18,9 @@ const config = {
       }
     },
     extend: {
+      maxWidth: {
+        '3xl': '2000px'
+      },
       colors: {
         border: '(var(--border)',
         input: '(var(--input)',
