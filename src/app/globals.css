@@ -4,6 +4,19 @@
 
 @layer base {
   :root {
+    --red: #8F1210;
+    --red-light: #D74309;
+    --orange: #E25E3E;
+    --orange-light: #FF9B50;
+    --yellow: #FFBB5C;
+    --yellow-transparent: #FFBB5C40;
+
+    --dark: #585150;
+    --dark-dark: #252323;
+    --dark-light: #78716E;
+    --dark-transparent: #78716E60;
+
+    /* shadcn */
     --background: #332a28;
     --foreground: #f7f7f7;
 
@@ -13,23 +26,23 @@
     --popover: #332a28;
     --popover-foreground: #f7f7f7;
 
-    --primary: #f7f7f7;
-    --primary-foreground: #271a19;
+    --primary: #FFBB5C ;
+    --primary-foreground: #252323;
 
-    --secondary: #1e262e;
-    --secondary-foreground: #f7f7f7;
+    --secondary: #8F1210;
+    --secondary-foreground: #252323;
 
-    --muted: #1e262e;
-    --muted-foreground: #1f3453;
+    --muted: #78716E;
+    --muted-foreground: #252323;
 
-    --accent: #1e262e;
-    --accent-foreground: #f7f7f7;
+    --accent: #D74309;
+    --accent-foreground: #252323;
 
     --destructive: #9b4221;
-    --destructive-foreground: #f7f7f7;
+    --destructive-foreground: #252323;
 
-    --border: #1e262e;
-    --input: #1e262e;
+    --border: #78716E;
+    --input: #78716E;
     --ring: #271e22;
   }
 }
@@ -49,7 +62,7 @@
     background-position: center center;
     background-repeat: repeat;
     background-image: url('/bgImage.svg');
-    }
+  }
 }
 
 @layer utilities {
@@ -59,5 +72,63 @@
 
   .flex_center_column {
     @apply flex flex-col justify-center items-center;
+  }
+
+  .bg_orange_gradient {
+    @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--orange-light)] to-[var(--red-light)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
+  }
+
+  .bg_red_gradient {
+    @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--red)] to-[var(--red-light)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
+  }
+
+  .bg_dark_gradient {
+    @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--dark-light)] to-[var(--dark)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
+  }
+
+  .btn_default {
+    /* border: 2px solid #FF9B50; */
+    border-radius: 0.60em;
+    /* font-weight: 700; */
+    text-transform: uppercase;
+    /* background-color: #FFBB5C; */
+    transform-style: preserve-3d;
+    transition: .15s cubic-bezier(0, 0, .6, 1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      /* background-color: #8F1210; */
+      /* box-shadow: 0 0 0 2px #FF9B50, 0 .625em 0 0 #ffbb5c48; */
+      transform: translate3d(0, .75em, -1em);
+      transition: .15s cubic-bezier(0, 0, .6, 1);
+    }
+
+    &:hover {
+      /* background-color: #ffe9e9; */
+      transform: translate(0, .25em);
+    }
+
+    &:hover::before {
+      box-shadow: 0 0 0 2px var(--orange-light), 0 .5em 0 0 var(--yellow-transparent);
+      transform: translate3d(0, .5em, -1em);
+    }
+
+    &:active {
+      /* background-color: #ffe9e9; */
+      transform: translate(0, .75em);
+    }
+
+    &:active::before {
+      box-shadow: 0 0 0 2px var(--orange-light), 0 0 var(--yellow-transparent);
+      transform: translate3d(0, 0, -1em);
+    }
   }
 }
