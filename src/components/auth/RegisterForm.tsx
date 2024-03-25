@@ -5,7 +5,7 @@ import { type z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { LoginSchema } from '@/schemas'
+import { RegisterSchema } from '@/schemas'
 import { login } from '@/actions/login'
 import { CardWrapper, MessageError, MessageSuccess, Spinner } from '@/components'
 import {
@@ -25,14 +25,15 @@ export default function LoginForm() {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: ''
     }
   })
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError('')
     setSuccess('')
 
@@ -51,9 +52,9 @@ export default function LoginForm() {
 
   return (
     <CardWrapper
-    headerLabel='Bienvenido de vuelta'
-    backButtonLabel='¿No tienes cuenta?'
-    backButtonHref='/auth/register'
+    headerLabel='Crea una cuenta'
+    backButtonLabel='¿Ya tienes una cuenta?'
+    backButtonHref='/auth/login'
     showSocial
     >
       <Form {...form}>
@@ -64,6 +65,27 @@ export default function LoginForm() {
         >
           {/* campos */}
           <div className='space-y-4'>
+            {/* nombre */}
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='font-bold'>Nombre</FormLabel>
+
+                  <FormControl>
+                    <Input
+                      type='text'
+                      placeholder='Psikocat'
+                      {...field}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* correo */}
             <FormField
               control={form.control}
@@ -113,7 +135,7 @@ export default function LoginForm() {
 
           {/* botón submit */}
           <Button type='submit' variant='main' size='sm' className='mx-auto w-[50%]' >
-            {!isPending && 'Iniciar sesión'}
+            {!isPending && 'Crear usuario'}
             <Spinner visible={isPending} />
           </Button>
         </form>
