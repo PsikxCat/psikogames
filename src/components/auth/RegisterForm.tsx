@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { RegisterSchema } from '@/schemas'
-import { login } from '@/actions/login'
+import { register } from '@/actions/register'
 import { CardWrapper, MessageError, MessageSuccess, Spinner } from '@/components'
 import {
   Form,
@@ -38,7 +38,7 @@ export default function LoginForm() {
     setSuccess('')
 
     startTransition(() => {
-      login(values)
+      register(values)
         .then((data) => {
           setError(data?.error)
           setSuccess(data?.success)
@@ -53,7 +53,7 @@ export default function LoginForm() {
   return (
     <CardWrapper
     headerLabel='Crea una cuenta'
-    backButtonLabel='¿Ya tienes una cuenta?'
+    backButtonLabel='¿Ya estas registrado?'
     backButtonHref='/auth/login'
     showSocial
     >

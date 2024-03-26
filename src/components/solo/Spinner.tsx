@@ -13,7 +13,7 @@ export default function Spinner({ visible }: SpinnerProps) {
         visible={visible}
         height="60"
         width="60"
-        barColor="#585150"
+        barColor="#FFBB5C"
         borderColor='#78716E'
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}

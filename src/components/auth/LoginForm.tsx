@@ -52,7 +52,7 @@ export default function LoginForm() {
   return (
     <CardWrapper
     headerLabel='Bienvenido de vuelta'
-    backButtonLabel='¿No tienes cuenta?'
+    backButtonLabel='¿No estas registrado?'
     backButtonHref='/auth/register'
     showSocial
     >

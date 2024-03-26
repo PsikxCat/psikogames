@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 const orbitron = Orbitron({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'PSIKOGAMES',
+  title: 'PsikoGames',
   description: 'PsikoGames es un sitio web de juegos en línea donde podras jugar y comparar tus puntuaciones con tus amigos.'
 }
 
