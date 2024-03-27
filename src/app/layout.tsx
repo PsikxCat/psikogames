@@ -8,7 +8,7 @@ const orbitron = Orbitron({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'PsikoGames',
-  description: 'PsikoGames es un sitio web de juegos en línea donde podras jugar y comparar tus puntuaciones con tus amigos.'
+  description: 'PsikoGames es un sitio web de juegos en línea donde podrás jugar y comparar tus puntuaciones con tus amigos.'
 }
 
 export default function RootLayout({

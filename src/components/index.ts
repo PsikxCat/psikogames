@@ -6,6 +6,7 @@ export { default as Social } from './auth/Social'
 export { default as BackButton } from './auth/BackButton'
 export { default as LoginForm } from './auth/LoginForm'
 export { default as RegisterForm } from './auth/RegisterForm'
+export { default as ErrorCard } from './auth/ErrorCard'
 
 export { default as Spinner } from './solo/Spinner'
 export { default as Logo } from './solo/Logo'

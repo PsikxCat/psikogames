@@ -96,6 +96,10 @@
     @apply bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-[var(--dark)] to-[var(--dark-dark)]
   }
 
+  .copyleft {
+    @apply inline-block rotate-180;
+  }
+
   .btn_default {
     /* border: 2px solid #FF9B50; */
     border-radius: 0.60em;

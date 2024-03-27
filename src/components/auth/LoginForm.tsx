@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'next/navigation'
 import { type z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 
 import { LoginSchema } from '@/schemas'
 import { login } from '@/actions/login'
@@ -23,12 +25,16 @@ export default function LoginForm() {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
+  const searchParams = useSearchParams()
+  const urlError = searchParams.get('error') === 'OAuthAccountNotLinked'
+    ? 'Este correo ya esta registrado con otro metodo de autenticacion'
+    : ''
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: '',
-      password: ''
+      email: 'test@user.com',
+      password: '123456'
     }
   })
 
@@ -108,7 +114,7 @@ export default function LoginForm() {
           </div>
 
           {/* mensajes error/success */}
-          <MessageError message={error} />
+          <MessageError message={error || urlError} />
           <MessageSuccess message={success} />
 
           {/* botón submit */}
