@@ -8,6 +8,7 @@ import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { signIn } from '@/auth'
 import { getUserByEmail } from '@/data/user'
 import { generateVerificationToken } from '@/lib/tokens'
+import { sendVerificationEmail } from '@/lib/mail'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validation = LoginSchema.safeParse(values)
@@ -25,8 +26,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!existingUser?.emailVerified) {
     const verificationToken = await generateVerificationToken(email)
 
-    if (verificationToken) return { success: 'Usuario no verificado, se ha enviado un correo de verificación.' }
-    else return { error: 'Error al enviar el correo de verificación.' }
+    const verificationEmail = await sendVerificationEmail(verificationToken.email, verificationToken.token)
+
+    if (verificationToken) {
+      if (verificationEmail.error) return { error: 'Usuario no verificado. Error al enviar el correo de verificación.' }
+
+      return { success: 'Usuario no verificado, se ha enviado un correo de verificación.' }
+    }
   }
 
   try {
