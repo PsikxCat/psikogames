@@ -3,6 +3,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 
 import authConfig from '@/auth.config'
 import { db } from '@/lib/db'
+import { getUserById } from './data/user'
 
 export const {
   handlers: { GET, POST },
@@ -24,6 +25,18 @@ export const {
     }
   },
   callbacks: {
+    async signIn({ user, account }) {
+      // User logueado con un provider externo, finaliza callback ok
+      if (account?.provider !== 'credentials') return true
+
+      // Si user logueado con credenciales no tiene email verificado, no inicia sesión
+      if (user?.id) {
+        const existingUser = await getUserById(user.id)
+        if (!existingUser?.emailVerified) return false
+      }
+
+      return true
+    },
     async jwt({ token }) {
       // console.log('jwt', token)
 

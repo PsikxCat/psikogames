@@ -3,7 +3,8 @@
  * Estas rutas no requieren autenticación.
  */
 export const publicRoutes: string[] = [
-  '/'
+  '/',
+  '/auth/new-verification'
 ]
 
 /**

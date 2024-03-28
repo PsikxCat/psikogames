@@ -40,6 +40,7 @@ export default function LoginForm() {
     startTransition(() => {
       register(values)
         .then((data) => {
+          console.log(data)
           setError(data?.error)
           setSuccess(data?.success)
         })

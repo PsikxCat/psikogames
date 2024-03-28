@@ -3,9 +3,11 @@
 import { type z } from 'zod'
 import { AuthError } from 'next-auth'
 
-import { signIn } from '@/auth'
 import { LoginSchema } from '@/schemas'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { signIn } from '@/auth'
+import { getUserByEmail } from '@/data/user'
+import { generateVerificationToken } from '@/lib/tokens'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validation = LoginSchema.safeParse(values)
@@ -13,6 +15,19 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if (!validation.success) return { error: 'Datos invalidos!' }
 
   const { email, password } = validation.data
+
+  const existingUser = await getUserByEmail(email)
+
+  if (existingUser?.email && !existingUser?.password) {
+    return { error: 'Este correo ya esta registrado con otro metodo de autenticacion' }
+  }
+
+  if (!existingUser?.emailVerified) {
+    const verificationToken = await generateVerificationToken(email)
+
+    if (verificationToken) return { success: 'Usuario no verificado, se ha enviado un correo de verificación.' }
+    else return { error: 'Error al enviar el correo de verificación.' }
+  }
 
   try {
     await signIn('credentials', {
