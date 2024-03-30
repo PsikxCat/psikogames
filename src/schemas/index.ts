@@ -20,3 +20,21 @@ export const RegisterSchema = z.object({
     message: 'La contraseña debe tener al menos 6 caracteres'
   })
 })
+
+export const ResetSchema = z.object({
+  email: z.string().email({
+    message: 'Ingresa un correo válido'
+  })
+})
+
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: 'La contraseña debe tener al menos 6 caracteres'
+  }),
+  confirmPassword: z.string().min(6, {
+    message: 'La contraseña debe tener al menos 6 caracteres'
+  })
+}).refine(data => data.password === data.confirmPassword, {
+  message: 'Las contraseñas no coinciden',
+  path: ['confirmPassword']
+})

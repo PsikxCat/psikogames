@@ -8,6 +8,8 @@ export { default as LoginForm } from './auth/LoginForm'
 export { default as RegisterForm } from './auth/RegisterForm'
 export { default as ErrorCard } from './auth/ErrorCard'
 export { default as NewVerificationForm } from './auth/NewVerificationForm'
+export { default as ResetForm } from './auth/ResetForm'
+export { default as NewPasswordForm } from './auth/NewPasswordForm'
 
 export { default as Spinner } from './solo/Spinner'
 export { default as Logo } from './solo/Logo'

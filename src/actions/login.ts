@@ -11,11 +11,10 @@ import { generateVerificationToken } from '@/lib/tokens'
 import { sendVerificationEmail } from '@/lib/mail'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-  const validation = LoginSchema.safeParse(values)
+  const validateFields = LoginSchema.safeParse(values)
+  if (!validateFields.success) return { error: 'Datos invalidos!' }
 
-  if (!validation.success) return { error: 'Datos invalidos!' }
-
-  const { email, password } = validation.data
+  const { email, password } = validateFields.data
 
   const existingUser = await getUserByEmail(email)
 

@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 'use client'
 
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { type z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { LoginSchema } from '@/schemas'
-import { login } from '@/actions/login'
+import { ResetSchema } from '@/schemas'
+import { reset } from '@/actions/reset'
 import { CardWrapper, MessageError, MessageSuccess, Spinner } from '@/components'
 import {
   Form,
@@ -27,25 +24,19 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
 
-  const searchParams = useSearchParams()
-  const urlError = searchParams.get('error') === 'OAuthAccountNotLinked'
-    ? 'Este correo ya esta registrado con otro metodo de autenticacion'
-    : ''
-
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: '',
-      password: ''
+      email: ''
     }
   })
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError('')
     setSuccess('')
 
     startTransition(() => {
-      login(values)
+      reset(values)
         .then((data) => {
           setError(data?.error)
           setSuccess(data?.success)
@@ -59,10 +50,9 @@ export default function LoginForm() {
 
   return (
     <CardWrapper
-    headerLabel='Bienvenido de vuelta'
-    backButtonLabel='¿No estas registrado?'
-    backButtonHref='/auth/register'
-    showSocial
+    headerLabel='¿Olvidaste tu contraseña?'
+    backButtonLabel='Volver al login'
+    backButtonHref='/auth/login'
     >
       <Form {...form}>
         <form
@@ -92,42 +82,15 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-
-            {/* contraseña */}
-            <FormField
-              control={form.control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='font-bold'>Contraseña</FormLabel>
-
-                  <FormControl>
-                    <Input
-                      type='password'
-                      placeholder='******'
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <Button variant='link' size='sm' className='w-auto p-0 font-normal'>
-                    <Link href='/auth/forgot-password'>
-                      ¿Olvidaste tu contraseña?
-                    </Link>
-                  </Button>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
 
           {/* mensajes error/success */}
-          <MessageError message={error || urlError} />
+          <MessageError message={error} />
           <MessageSuccess message={success} />
 
           {/* botón submit */}
-          <Button type='submit' variant='main' size='sm' className='mx-auto w-[50%]' >
-            {!isPending && 'Iniciar sesión'}
+          <Button type='submit' variant='main' size='sm' className='w-full mx-auto' >
+            {!isPending && 'Enviar correo de recuperación'}
             <Spinner visible={isPending} />
           </Button>
         </form>
