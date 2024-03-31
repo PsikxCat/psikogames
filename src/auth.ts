@@ -3,7 +3,8 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 
 import authConfig from '@/auth.config'
 import { db } from '@/lib/db'
-import { getUserById } from './data/user'
+import { getUserById } from '@/data/user'
+import { getTwoFactorConfirmationByUserId } from './data/two-factor-confirmation'
 
 export const {
   handlers: { GET, POST },
@@ -29,10 +30,21 @@ export const {
       // User logueado con un provider externo, finaliza callback ok
       if (account?.provider !== 'credentials') return true
 
-      // Si user logueado con credenciales no tiene email verificado, no inicia sesión
       if (user?.id) {
         const existingUser = await getUserById(user.id)
+
+        // Previene el inicio de sesión si el correo no ha sido verificado
         if (!existingUser?.emailVerified) return false
+
+        if (existingUser.isTwoFactorEnabled) {
+          const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(user.id)
+
+          if (!twoFactorConfirmation) return false
+
+          await db.twoFactorConfirmation.delete({
+            where: { id: twoFactorConfirmation.id }
+          })
+        }
       }
 
       return true

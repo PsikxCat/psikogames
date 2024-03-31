@@ -11,20 +11,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema } from '@/schemas'
 import { login } from '@/actions/login'
 import { CardWrapper, MessageError, MessageSuccess, Spinner } from '@/components'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
 export default function LoginForm() {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
+  const [showTwoFactorField, setShowTwoFactorField] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   const searchParams = useSearchParams()
@@ -36,7 +30,8 @@ export default function LoginForm() {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
-      password: ''
+      password: '',
+      twoFactorCode: ''
     }
   })
 
@@ -47,13 +42,13 @@ export default function LoginForm() {
     startTransition(() => {
       login(values)
         .then((data) => {
-          setError(data?.error)
-          setSuccess(data?.success)
+          if (data.error) setError(data?.error)
+
+          if (data?.success) setSuccess(data.success)
+
+          if (data?.twoFactorToken) setShowTwoFactorField(true)
         })
-        .catch((error) => {
-          setError('Error en el servidor.')
-          console.error(error)
-        })
+        .catch((error) => { console.error(error) })
     })
   }
 
@@ -72,53 +67,79 @@ export default function LoginForm() {
         >
           {/* campos */}
           <div className='space-y-4'>
-            {/* correo */}
-            <FormField
-              control={form.control}
-              name='email'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='font-bold'>Email</FormLabel>
 
-                  <FormControl>
-                    <Input
-                      type='email'
-                      placeholder='tucorreo@email.com'
-                      {...field}
-                    />
-                  </FormControl>
+            {!showTwoFactorField && (<>
+              {/* correo */}
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='font-bold'>Email</FormLabel>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormControl>
+                      <Input
+                        type='email'
+                        placeholder='tucorreo@email.com'
+                        {...field}
+                      />
+                    </FormControl>
 
-            {/* contraseña */}
-            <FormField
-              control={form.control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='font-bold'>Contraseña</FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                  <FormControl>
-                    <Input
-                      type='password'
-                      placeholder='******'
-                      {...field}
-                    />
-                  </FormControl>
+              {/* contraseña */}
+              <FormField
+                control={form.control}
+                name='password'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='font-bold'>Contraseña</FormLabel>
 
-                  <Button variant='link' size='sm' className='w-auto p-0 font-normal'>
-                    <Link href='/auth/forgot-password'>
-                      ¿Olvidaste tu contraseña?
-                    </Link>
-                  </Button>
+                    <FormControl>
+                      <Input
+                        type='password'
+                        placeholder='******'
+                        {...field}
+                      />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <Button variant='link' size='sm' className='w-auto p-0 font-normal'>
+                      <Link href='/auth/forgot-password'>
+                        ¿Olvidaste tu contraseña?
+                      </Link>
+                    </Button>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>)}
+
+            {showTwoFactorField && (<>
+            {/* codigo de autenticacion de dos factores */}
+              <FormField
+                control={form.control}
+                name='twoFactorCode'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='font-bold'>Codigo de autenticacion</FormLabel>
+
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder='XXXXXX'
+                        type='text'
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>)}
           </div>
 
           {/* mensajes error/success */}

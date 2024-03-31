@@ -11,20 +11,20 @@ export const generateVerificationEmailContent = (verificationLink: string) => {
   }
 }
 
-export const generate2FAEmailContent = (TwoFactorCode: string) => {
-  const textData = `Hola,\n\nEl siguiente es el codigo de doble autenticación: \n${TwoFactorCode} \n\n Copia y pega este código en la aplicación para completar el proceso.`
-  const htmlData = `<h1 class="form-heading" align="left">Hola,<h1/><p class="form-answer" align="left">El siguiente es el codigo de doble autenticación:</p><p class="form-answer" align="left">${TwoFactorCode}</p><p class="form-answer" align="left">Copia y pega este código en la aplicación para completar el proceso.</p>`
-  return {
-    text: textData,
-    html: generateHTML('Verificación de cuenta (2FA)', htmlData)
-  }
-}
-
 export const generatePasswordResetEmailContent = (resetLink: string) => {
   const textData = `Hola,\n\nHas solicitado restablecer tu contraseña. Por favor, haz click en el siguiente enlace para restablecerla: \n${resetLink} \n\nSi no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.`
   const htmlData = `<h1 class="form-heading" align="left">Hola,<h1/><p class="form-answer" align="left">Has solicitado restablecer tu contraseña. Por favor, haz click en el siguiente enlace para restablecerla:</p><a href="${resetLink}">${resetLink}</a><p class="form-answer" align="left">Si no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.</p>`
   return {
     text: textData,
     html: generateHTML('Restablecimiento de contraseña en PsikoGames', htmlData)
+  }
+}
+
+export const generate2FAEmailContent = (TwoFactorCode: string) => {
+  const textData = `Hola,\n\nEl siguiente es el codigo de doble autenticación: \n${TwoFactorCode} \n\n Copia y pega este código en la aplicación para completar el proceso.`
+  const htmlData = `<h1 class="form-heading" align="left">Hola,<h1/><p class="form-answer" align="left">El siguiente es el codigo de doble autenticación:</p><p class="form-answer" align="left">${TwoFactorCode}</p><p class="form-answer" align="left">Copia y pega este código en la aplicación para completar el proceso.</p>`
+  return {
+    text: textData,
+    html: generateHTML('Verificación de cuenta (2FA)', htmlData)
   }
 }

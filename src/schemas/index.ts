@@ -6,7 +6,8 @@ export const LoginSchema = z.object({
   }),
   password: z.string().min(1, {
     message: 'Ingresa una contraseña'
-  })
+  }),
+  twoFactorCode: z.optional(z.string())
 })
 
 export const RegisterSchema = z.object({

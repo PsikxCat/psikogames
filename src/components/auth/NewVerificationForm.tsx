@@ -14,7 +14,6 @@ export default function NewVerificationForm() {
   const [token, email] = [searchParams.get('token'), searchParams.get('email')]
 
   const handleSubmit = useCallback(() => {
-    console.log(token, email)
     if (!token || !email) {
       setError('Token invalido!')
       return
@@ -22,7 +21,6 @@ export default function NewVerificationForm() {
 
     newVerification(token, email)
       .then((data) => {
-        console.log(data)
         setError(data.error)
         setSuccess(data.success)
       }).catch((error) => {
