@@ -1,19 +1,20 @@
-import Link from 'next/link'
+'use client'
 
-import { auth } from '@/auth'
+import { useCurrentUser } from '@/hooks/use-current-user'
 import { Button } from '@/components/ui/button'
+import { logout } from '@/actions/logout'
 
-export default async function SettingsPage() {
-  const session = await auth()
+export default function SettingsPage() {
+  const user = useCurrentUser()
 
   return (
     <div className="h-full flex_center_column gap-10">
       <p>
-        {JSON.stringify(session)}
+        {JSON.stringify(user, null, 2)}
       </p>
 
-      <Button variant="dark" asChild>
-        <Link href="/home">Home</Link>
+      <Button variant="red" onClick={async () => { await logout() }}>
+        Salir
       </Button>
     </div>
   )

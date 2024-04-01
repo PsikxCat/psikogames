@@ -26,6 +26,11 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
   id                      String    @id @default(cuid())
   name                    String?
@@ -35,7 +40,8 @@ model User {
   image                   String?
   isTwoFactorEnabled      Boolean @default(false)
   twoFactorConfirmation   TwoFactorConfirmation?
-  accounts      Account[]
+  role                    UserRole @default(USER)
+  accounts                Account[]
 }
 
 model VerificationToken {
