@@ -11,7 +11,7 @@ import { CardWrapper, MessageError, MessageSuccess, Spinner } from '@/components
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { newPassword } from '@/actions/newPassword'
+import { newPassword } from '@/actions/new-password'
 
 export default function NewPasswordForm() {
   const [error, setError] = useState<string | undefined>('')

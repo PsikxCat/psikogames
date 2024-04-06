@@ -5,6 +5,7 @@ import { db } from '@/lib/db'
 import { getVerificationTokenByEmail } from '@/data/verification-token'
 import { getPasswordResetTokenByEmail } from '@/data/password-reset-token'
 import { getTwoFactorTokenByEmail } from '@/data/two-factor-token'
+import { getChangeEmailTokenByEmail } from '@/data/change-email'
 
 export const generateVerificationToken = async (email: string) => {
   const token = uuidv4()
@@ -58,4 +59,22 @@ export const generateTwoFactorToken = async (email: string) => {
   })
 
   return twoFactorToken
+}
+
+export const generateChangeEmailToken = async (email: string) => {
+  const token = uuidv4()
+  const expires = new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 horas
+
+  const existingToken = await getChangeEmailTokenByEmail(email)
+  if (existingToken) await db.changeEmailToken.delete({ where: { id: existingToken.id } })
+
+  const changeEmailToken = await db.changeEmailToken.create({
+    data: {
+      email,
+      token,
+      expires
+    }
+  })
+
+  return changeEmailToken
 }

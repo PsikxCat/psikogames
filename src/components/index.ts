@@ -10,6 +10,7 @@ export { default as ErrorCard } from './auth/ErrorCard'
 export { default as NewVerificationForm } from './auth/NewVerificationForm'
 export { default as ResetForm } from './auth/ResetForm'
 export { default as NewPasswordForm } from './auth/NewPasswordForm'
+export { default as ChangeEmailForm } from './auth/ChangeEmailForm'
 
 export { default as Spinner } from './solo/Spinner'
 export { default as Logo } from './solo/Logo'

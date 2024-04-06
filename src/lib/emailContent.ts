@@ -28,3 +28,12 @@ export const generate2FAEmailContent = (TwoFactorCode: string) => {
     html: generateHTML('Verificación de cuenta (2FA)', htmlData)
   }
 }
+
+export const generateChangeEmailContent = (changeEmailLink: string) => {
+  const textData = `Hola,\n\nPor favor verifica tu nuevo correo haciendo click en el siguiente enlace: \n${changeEmailLink}`
+  const htmlData = `<h1 class="form-heading" align="left">Hola,<h1/><p class="form-answer" align="left">Por favor verifica tu nuevo correo haciendo click en el siguiente enlace:</p><a href="${changeEmailLink}">${changeEmailLink}</a>`
+  return {
+    text: textData,
+    html: generateHTML('Verificación de nuevo correo para PsikoGames', htmlData)
+  }
+}

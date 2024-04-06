@@ -76,3 +76,12 @@ model TwoFactorConfirmation {
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model ChangeEmailToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String
+  expires   DateTime
+
+  @@unique([email, token])
+}

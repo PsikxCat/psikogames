@@ -39,3 +39,24 @@ export const NewPasswordSchema = z.object({
   message: 'Las contraseñas no coinciden',
   path: ['confirmPassword']
 })
+
+export const SettingsSchema = z.object({
+  name: z.optional(z.string().min(3, {
+    message: 'El nombre debe tener al menos 3 caracteres'
+  })),
+  email: z.optional(z.string().email({
+    message: 'Ingresa un correo válido'
+  })),
+  isTwoFactorEnabled: z.optional(z.boolean()),
+  password: z.optional(z.string()),
+  newPassword: z.optional(z.string().min(6, {
+    message: 'La contraseña debe tener al menos 6 caracteres'
+  }))
+}).refine(data => {
+  if ((data.password && !data.newPassword) ?? (!data.password && data.newPassword)) return false
+
+  return true
+}, {
+  message: 'Ambos campos, contraseña y nueva contraseña, son requeridos',
+  path: ['newPassword']
+})
