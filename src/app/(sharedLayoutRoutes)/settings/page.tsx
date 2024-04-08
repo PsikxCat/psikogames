@@ -3,7 +3,6 @@
 import { useState, useTransition } from 'react'
 import { type z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
 import { SettingsSchema } from '@/schemas'
@@ -194,17 +193,6 @@ export default function SettingsPage() {
                 >
                   {!isPending && 'Actualizar'}
                   <Spinner visible={isPending} />
-                </Button>
-
-                <Button
-                  variant='red'
-                  disabled={isPending}
-                  asChild
-                >
-                  <Link href='/home'>
-                    {!isPending && 'Volver'}
-                    <Spinner visible={isPending} />
-                  </Link>
                 </Button>
               </div>
             </form>

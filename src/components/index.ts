@@ -18,3 +18,8 @@ export { default as MessageError } from './solo/MessageError'
 export { default as MessageSuccess } from './solo/MessageSuccess'
 export { default as FormError } from './solo/FormError'
 export { default as FormSuccess } from './solo/FormSuccess'
+
+// Games components
+export { default as GameCard } from './games/solo/GameCard'
+
+// Memory game components

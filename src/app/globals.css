@@ -77,7 +77,7 @@
   }
 
   .wrapper {
-    @apply w-full max-w-3xl flex_center py-12 px-3 md:px-8;
+    @apply w-full max-w-3xl flex_center py-4 px-3 md:px-8;
   }
 
   .bg_orange_gradient {

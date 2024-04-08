@@ -24,12 +24,19 @@ export default async function RootLayout({
     <html lang="en">
       <SessionProvider session={session}>
         <body className={cn(
-          'h-[100svh] w-full flex_center_column tracking-wider',
+          'min-h-[100svh] w-full flex_center_column tracking-wider',
           orbitron.className
         )}>
           <main className='wrapper h-full'>
             {children}
           </main>
+
+          <footer className='w-full py-4 text-sm text-center'>
+            <p className='text-[12px]'>
+              <span className='copyleft text-sm'>&nbsp;&copy;</span>
+              {new Date().getFullYear()} Psikocat.  Ningún derecho reservado.
+            </p>
+          </footer>
         </body>
       </SessionProvider>
     </html>
