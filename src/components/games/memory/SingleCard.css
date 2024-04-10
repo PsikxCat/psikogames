@@ -1,0 +1,33 @@
+.card {
+  position: relative;
+  min-width: 50px;
+  max-width: 150px;
+
+  & img {
+    width: 100%;
+    display: block;
+    border: 2px solid #fff;
+    border-radius: 6px;
+  }
+
+  & .front {
+    position: absolute;
+    transform: rotateY(90deg);
+    background-color: rgba(99, 99, 99, 0.5);
+  }
+
+  & .back {
+    transform: rotateY(0deg);
+    background: radial-gradient(ellipse at top, #c72902, #410c03);
+  }
+}
+
+.flipped {
+  & .front {
+    transform: rotateY(0deg);
+  }
+
+  & .back {
+    transform: rotateY(-90deg);
+  }
+}

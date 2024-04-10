@@ -6,7 +6,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <section className='flex_center_column h-full '>
+    <section className='flex_center_column h-full w-full'>
       <nav className="absolute top-0 h-[calc(50px+2vw)] w-full max-w-[1500px] flex items-center justify-between py-2">
         <Logo size="md" />
 

@@ -23,3 +23,5 @@ export { default as FormSuccess } from './solo/FormSuccess'
 export { default as GameCard } from './games/solo/GameCard'
 
 // Memory game components
+export { default as CardsTable } from './games/memory/CardsTable'
+export { default as SingleCard } from './games/memory/SingleCard'

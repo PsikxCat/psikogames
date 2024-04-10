@@ -9,7 +9,7 @@ export default function GamesPage() {
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         <GameCard
-          imageSrc='/psikogames.webp'
+          imageSrc='/images/memory-cards.webp'
           gameName='Memory'
           playButtonHref='/games/memory'
           statsButtonHref='/games/stats/#memory'
