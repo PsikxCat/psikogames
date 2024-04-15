@@ -25,3 +25,6 @@ export { default as GameCard } from './games/solo/GameCard'
 // Memory game components
 export { default as CardsTable } from './games/memory/CardsTable'
 export { default as SingleCard } from './games/memory/SingleCard'
+
+// Wordle game components
+export { default as WordsTable } from './games/wordle/WordsTable'

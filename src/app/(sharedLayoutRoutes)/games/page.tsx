@@ -3,9 +3,9 @@ import { GameCard } from '@/components'
 export default function GamesPage() {
   return (
     <div className="flex_center_column gap-10">
-      {/* <h1 className='text-3xl uppercase font-medium text-primary' >
-        Juegos
-      </h1> */}
+      <h1 className='text-2xl uppercase font-medium text-primary' >
+        ¿Qué quieres jugar hoy?
+      </h1>
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         <GameCard
@@ -19,11 +19,11 @@ export default function GamesPage() {
 
         <GameCard
           imageSrc='/psikogames.webp'
-          gameName='Scrabble'
-          playButtonHref='/games/#'
-          statsButtonHref='/games/stats/#'
+          gameName='Wordle'
+          playButtonHref='/games/wordle'
+          statsButtonHref='/games/stats/#wordle'
         >
-          <p>Forma palabras con las letras que te toquen.</p>
+          <p>Adivina la palabra secreta en 6 intentos o menos.</p>
         </GameCard>
 
         <GameCard
