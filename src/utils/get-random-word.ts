@@ -14,5 +14,5 @@ export default function getRandomWord(): string {
     'trigo', 'venir', 'vista', 'volar'
   ]
 
-  return words[Math.floor(Math.random() * words.length)]
+  return words[Math.floor(Math.random() * words.length)].toUpperCase()
 }

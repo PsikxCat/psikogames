@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import getRandomWord from '@/utils/get-random-word'
 import { Button } from '@/components/ui/button'
-import { WordsTable } from '@/components'
+import { Wordle } from '@/components'
 
 export default function WordleGamePage() {
   const [correctWord, setCorrectWord] = useState<string>('')
@@ -16,7 +16,7 @@ export default function WordleGamePage() {
   return (
     <section className="w-full flex_center_column gap-4">
       <h1 className="text-3xl uppercase text-primary font-semibold">
-        Memory cards
+        Wordle
       </h1>
 
       <Button
@@ -33,7 +33,7 @@ export default function WordleGamePage() {
           <span>tiempo</span>
         </div>
 
-        <WordsTable correctWord={correctWord} />
+        <Wordle correctWord={correctWord} />
       </div>
     </section>
   )

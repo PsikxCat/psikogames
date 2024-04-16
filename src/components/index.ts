@@ -27,4 +27,6 @@ export { default as CardsTable } from './games/memory/CardsTable'
 export { default as SingleCard } from './games/memory/SingleCard'
 
 // Wordle game components
-export { default as WordsTable } from './games/wordle/WordsTable'
+export { default as Wordle } from './games/wordle/Wordle'
+export { default as Grid } from './games/wordle/Grid'
+export { default as Row } from './games/wordle/Row'
