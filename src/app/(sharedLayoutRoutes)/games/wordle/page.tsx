@@ -14,27 +14,26 @@ export default function WordleGamePage() {
   }, [])
 
   return (
-    <section className="w-full flex_center_column gap-4">
+    <main className="w-full flex_center_column gap-4">
       <h1 className="text-3xl uppercase text-primary font-semibold">
         Wordle
       </h1>
 
       <Button
         variant="main"
-        className='w-auto'
+        className='w-auto mb-4'
         onClick={() => { setCorrectWord(getRandomWord()) }}
       >
         Nuevo juego
       </Button>
 
-      <div className='flex_center_column gap-2 max-w-[700px] w-full'>
-        <div className='w-full flex justify-between mt-4 px-8'>
-          <span>turnos</span>
-          <span>tiempo</span>
-        </div>
+      <section className='flex_center_column gap-2 max-w-[700px] w-full'>
+        {/* <div className='w-full flex_center mt-4 px-8'>
+          <span>00:00</span>
+        </div> */}
 
         <Wordle correctWord={correctWord} />
-      </div>
-    </section>
+      </section>
+    </main>
   )
 }

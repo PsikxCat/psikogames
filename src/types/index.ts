@@ -10,4 +10,5 @@ export enum statusLetterType {
   correct = 'correct',
   inWord = 'inWord',
   notInWord = 'notInWord',
+  unknown = 'unknown'
 }

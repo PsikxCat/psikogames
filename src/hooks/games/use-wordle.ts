@@ -7,7 +7,7 @@ import { statusLetterType } from '@/types'
 export function useWordle(correctWord: string) {
   const [turn, setTurn] = useState<number>(0)
   const [formattedGuesses, setFormattedGuesses] = useState<{ letter: string, status: statusLetterType }[][]>([
-    ...Array(6).fill([...Array(5).fill({ letter: '', status: statusLetterType.notInWord })])
+    ...Array(6).fill([...Array(5).fill({ letter: '', status: statusLetterType.unknown })])
   ]) // el valor inicial es un array de 6 arrays de 5 objetos con letra y status
   const [currentGuess, setCurrentGuess] = useState<string>('')
   const [guessesHistory, setGuessesHistory] = useState<string[]>([])
@@ -30,7 +30,7 @@ export function useWordle(correctWord: string) {
 
     if (turn > 5) {
       isGuessValid = false
-      console.log('Has usado todos tus intentos, perdiste') // instalar sonner para las notificaciones
+      console.log('Has usado todos tus intentos, perdiste') // Mostrar modal con la palabra correcta y un boton para reiniciar el juego
     } else if (currentGuess.length !== 5) {
       isGuessValid = false
       console.log('La palabra debe tener 5 letras') // instalar sonner para las notificaciones
@@ -42,27 +42,34 @@ export function useWordle(correctWord: string) {
     if (isGuessValid) {
       const formattedGuess = formatGuessObject()
       addNewGuess(formattedGuess)
+      // Mostrar modal con la palabra correcta y un boton para reiniciar el juego
+      // Resetear el juego
     }
   }
 
   const formatGuessObject = (): { letter: string, status: statusLetterType }[] => {
-    const correctWordToArray = correctWord.split('')
+    const formattedCorrectWord = correctWord.split('')
+      .map<{ letter: string, isEvaluated: boolean }>((letter) => ({ letter, isEvaluated: false }))
     const formattedGuess = currentGuess.split('')
-      .map<{ letter: string, status: statusLetterType }>((letter) => ({ letter, status: statusLetterType.notInWord }))
+      .map<{ letter: string, status: statusLetterType }>((letter) => ({ letter, status: statusLetterType.unknown }))
 
-    // iteracion para buscar coincidencias (correct & inWord) y setear el status de cada letra
-    formattedGuess.forEach((item, i) => {
-      if (item.letter === correctWordToArray[i]) {
-        item.status = statusLetterType.correct
-        correctWordToArray[i] = '' // letra encontrada, se elimina del array para evitar errores
-        console.log('letra correcta', item.letter)
-      } else {
-        const index = correctWordToArray.indexOf(item.letter)
+    // iteracion para buscar las letras en la posicion correcta
+    formattedGuess.forEach((guessLetter, i) => {
+      if (guessLetter.letter === formattedCorrectWord[i].letter) {
+        guessLetter.status = statusLetterType.correct
+        formattedCorrectWord[i].isEvaluated = true
+      }
+    })
+    // iteracion para buscar las letras que estan en la palabra pero en la posicion incorrecta
+    formattedGuess.forEach((guessLetter) => {
+      if (guessLetter.status === statusLetterType.unknown) {
+        const isLetterInWord = formattedCorrectWord.find((correctLetter) => correctLetter.letter === guessLetter.letter && !correctLetter.isEvaluated)
 
-        if (index !== -1) {
-          item.status = statusLetterType.inWord
-          correctWordToArray[index] = ''
-          console.log('letra en palabra', item.letter)
+        if (isLetterInWord) {
+          guessLetter.status = statusLetterType.inWord
+          isLetterInWord.isEvaluated = true
+        } else {
+          guessLetter.status = statusLetterType.notInWord
         }
       }
     })
@@ -82,7 +89,7 @@ export function useWordle(correctWord: string) {
 
     if (correctWord === currentGuess) {
       setIsCorrect(true)
-      console.log('Has ganado!') // instalar sonner para las notificaciones
+      console.log('Has ganado!')
     }
   }
 

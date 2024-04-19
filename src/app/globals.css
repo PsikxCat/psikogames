@@ -147,3 +147,13 @@
   }
 }
 
+/* wordle game styles */
+@layer utilities {
+  .wordle_row {
+    @apply text-center flex justify-center
+  }
+
+  .wordle_row > div {
+    @apply block w-12 h-12 sm:w-20 sm:h-20 leading-[48px] sm:leading-[80px] font-bold sm:font-extrabold text-2xl sm:text-4xl m-1 text-center rounded-sm sm:rounded-lg border border-gray-300 bg-[var(--dark-dark)]
+  }
+}

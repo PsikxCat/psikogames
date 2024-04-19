@@ -3,19 +3,22 @@ import { Row } from '@/components'
 
 interface GridProps {
   currentGuess: string
-  turn: number
   formattedGuesses: { letter: string, status: statusLetterType }[][]
+  turn: number
 }
 
-export default function Grid({ currentGuess, turn, formattedGuesses }: GridProps) {
+export default function Grid({ currentGuess, formattedGuesses, turn }: GridProps) {
   return (
-    <div className="flex_center_column">
-      <p>{currentGuess}</p>
-      <p>{turn}</p>
-
+    <section className="flex_center_column">
       {formattedGuesses.map((formattedGuess, i) => (
-        <Row key={i} formattedGuess={formattedGuess} />
+        i !== turn
+          ? (
+          <Row key={i} formattedGuess={formattedGuess} />
+            )
+          : (
+          <Row key={i} currentGuess={currentGuess} />
+            )
       ))}
-    </div>
+    </section>
   )
 }
