@@ -21,13 +21,15 @@ const flipAnimation = (i: number, status: statusLetterType) => {
   const bgColor = status === 'correct' ? COLORS.correct : status === 'inWord' ? COLORS.inWord : status === 'notInWord' ? COLORS.notInWord : COLORS.unknown
   const borderColor = status === 'correct' ? COLORS.correct : status === 'inWord' ? COLORS.inWord : status === 'notInWord' ? COLORS.notInWord : COLORS.unknown
 
-  return {
-    initial: { rotateX: 0, backgroundColor: COLORS.unknown },
-    animate: {
-      rotateX: [0, 90, 90, 0],
-      backgroundColor: [COLORS.unknown, COLORS.unknown, bgColor, bgColor],
-      borderColor: [COLORS.unknown, COLORS.unknown, borderColor, borderColor],
-      transition: { duration: 0.5, times: [0, 0.45, 0.55, 1], delay: i * 0.2 }
+  if (status !== 'unknown') {
+    return {
+      initial: { rotateX: 0, backgroundColor: COLORS.unknown },
+      animate: {
+        rotateX: [0, 90, 90, 0],
+        backgroundColor: [COLORS.unknown, COLORS.unknown, bgColor, bgColor],
+        borderColor: [COLORS.unknown, COLORS.unknown, borderColor, borderColor],
+        transition: { duration: 0.5, times: [0, 0.45, 0.55, 1], delay: i * 0.2 }
+      }
     }
   }
 }

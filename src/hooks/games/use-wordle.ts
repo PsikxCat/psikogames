@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
-import { statusLetterType } from '@/types'
+import { type KeyPadLetterType, statusLetterType } from '@/types'
 
 export function useWordle(correctWord: string) {
   const [turn, setTurn] = useState<number>(0)
@@ -12,44 +13,75 @@ export function useWordle(correctWord: string) {
   const [currentGuess, setCurrentGuess] = useState<string>('')
   const [guessesHistory, setGuessesHistory] = useState<string[]>([])
   const [isCorrect, setIsCorrect] = useState<boolean>(false)
+  const [elapsedTime, setElapsedTime] = useState<number>(0)
+  const [timerRunning, setTimerRunning] = useState<boolean>(false)
+  const [usedKeys, setUsedKeys] = useState<KeyPadLetterType[]>([])
 
-  const handleKeyPress = (e: KeyboardEvent): void => {
-    const key = e?.key
-    const regex = /^[a-zA-ZñÑ]$/
+  useEffect(() => {
+    if (timerRunning) {
+      const timer = setInterval(() => {
+        setElapsedTime((prevTime: number) => prevTime + 1)
+      }, 1000)
 
-    if (regex.test(key) && currentGuess.length < 5) {
-      setCurrentGuess((prev) => prev + key.toUpperCase())
+      return () => { clearInterval(timer) }
     }
+  }, [timerRunning])
 
-    if (key === 'Backspace') setCurrentGuess((prev) => prev.slice(0, -1))
-    if (key === 'Enter') handleEnterPress()
+  const resetGame = () => {
+    setCurrentGuess('')
+    setTurn(0)
+    setGuessesHistory([])
+    setIsCorrect(false)
+    setFormattedGuesses([
+      ...Array(6).fill([...Array(5).fill({ letter: '', status: statusLetterType.unknown })])
+    ])
+
+    // setUsedKeys({})
+    window.location.reload()
   }
 
-  const handleEnterPress = (): void => { // pendiente notificaciones con sonner
+  const handleKeyPress = (key: KeyboardEvent | string): void => {
+    if (isCorrect || turn > 5) return
+
+    let inputKey: string
+
+    if (key instanceof KeyboardEvent) inputKey = key.key
+    else inputKey = key
+
+    const regex = /^[a-zA-ZñÑ]$/
+
+    if (regex.test(inputKey) && currentGuess.length < 5) {
+      setCurrentGuess((prev) => prev + inputKey.toUpperCase())
+      setTimerRunning(true)
+    }
+
+    if (inputKey === 'Backspace') setCurrentGuess((prev) => prev.slice(0, -1))
+    if (inputKey === 'Enter') handleEnterPress()
+  }
+
+  const handleEnterPress = (): void => {
+    if (turn > 5) return
+
     let isGuessValid = true
 
-    if (turn > 5) {
+    if (currentGuess.length < 5) {
+      toast.error('La palabra debe tener 5 letras')
       isGuessValid = false
-      console.log('Has usado todos tus intentos, perdiste') // Mostrar modal con la palabra correcta y un boton para reiniciar el juego
-    } else if (currentGuess.length !== 5) {
-      isGuessValid = false
-      console.log('La palabra debe tener 5 letras') // instalar sonner para las notificaciones
     } else if (guessesHistory.includes(currentGuess)) {
+      toast.warning('Ya has usado esa palabra')
       isGuessValid = false
-      console.log('Ya has usado esta palabra') // instalar sonner para las notificaciones
     }
 
     if (isGuessValid) {
       const formattedGuess = formatGuessObject()
       addNewGuess(formattedGuess)
-      // Mostrar modal con la palabra correcta y un boton para reiniciar el juego
-      // Resetear el juego
     }
   }
 
   const formatGuessObject = (): { letter: string, status: statusLetterType }[] => {
     const formattedCorrectWord = correctWord.split('')
       .map<{ letter: string, isEvaluated: boolean }>((letter) => ({ letter, isEvaluated: false }))
+
     const formattedGuess = currentGuess.split('')
       .map<{ letter: string, status: statusLetterType }>((letter) => ({ letter, status: statusLetterType.unknown }))
 
@@ -77,20 +109,46 @@ export function useWordle(correctWord: string) {
     return formattedGuess
   }
 
+  // # TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const addNewGuess = (formattedGuess: { letter: string, status: statusLetterType }[]) => {
+    if (correctWord === currentGuess) {
+      setIsCorrect(true)
+      setTimerRunning(false)
+    } else if (turn === 5 && !isCorrect) {
+      setTimerRunning(false)
+    }
+
     setTurn((prev) => prev + 1)
-    setCurrentGuess('')
     setGuessesHistory((prev) => [...prev, currentGuess])
+    setCurrentGuess('')
+
     setFormattedGuesses((prev) => {
       const newFormattedGuesses = [...prev]
+
       newFormattedGuesses[turn] = formattedGuess
+
       return newFormattedGuesses
     })
 
-    if (correctWord === currentGuess) {
-      setIsCorrect(true)
-      console.log('Has ganado!')
-    }
+    setUsedKeys((prev) => {
+      const newKeys = [...prev]
+
+      formattedGuess.forEach((guess) => {
+        const existingKey = newKeys.find((key) => key.letter === guess.letter)
+
+        if (!existingKey) {
+          newKeys.push({ letter: guess.letter, status: guess.status })
+        } else {
+          if (guess.status === statusLetterType.correct) {
+            existingKey.status = statusLetterType.correct
+          } else if (guess.status === statusLetterType.inWord && existingKey.status !== statusLetterType.correct) {
+            existingKey.status = statusLetterType.inWord
+          }
+        }
+      })
+
+      return newKeys
+    })
   }
 
   return {
@@ -99,6 +157,9 @@ export function useWordle(correctWord: string) {
     currentGuess,
     guessesHistory,
     isCorrect,
-    handleKeyPress
+    handleKeyPress,
+    elapsedTime,
+    resetGame,
+    usedKeys
   }
 }

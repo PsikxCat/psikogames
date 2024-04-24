@@ -1,8 +1,10 @@
 'use client'
 
+import { useRef, useState } from 'react'
+
+import formatTime from '@/utils/format-time'
 import { CardsTable } from '@/components'
 import { Button } from '@/components/ui/button'
-import { useRef, useState } from 'react'
 
 interface CardsTableRef {
   shuffleCards: () => void
@@ -16,14 +18,6 @@ export default function MemoryGamePage() {
 
   const startNewGame = (): void => {
     cardsTableRef.current!.shuffleCards()
-  }
-
-  const formatTime = (seconds: number): string => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    const formattedMinutes = String(minutes).padStart(2, '0')
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0')
-    return `${formattedMinutes}:${formattedSeconds}`
   }
 
   return (

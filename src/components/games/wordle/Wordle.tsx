@@ -1,36 +1,50 @@
 'use client'
 
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 
+import formatTime from '@/utils/format-time'
 import { useWordle } from '@/hooks/games/use-wordle'
-import { Grid } from '@/components'
+import { Grid, Keypad } from '@/components'
 
 interface WordsTableProps {
   correctWord: string
 }
 
 export default function Wordle({ correctWord }: WordsTableProps) {
-  const { handleKeyPress, currentGuess, formattedGuesses, turn } = useWordle(correctWord)
+  const { handleKeyPress, currentGuess, isCorrect, formattedGuesses, turn, elapsedTime, usedKeys } = useWordle(correctWord)
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
 
+    if (turn > 5 && !isCorrect) {
+      window.removeEventListener('keydown', handleKeyPress)
+      setTimeout(() => toast.error('Has usado todos tus intentos, perdiste!'), 1200)
+    }
+
+    if (isCorrect) {
+      window.removeEventListener('keydown', handleKeyPress)
+      setTimeout(() => toast.success('Has ganado!'), 1200)
+    }
+
     return () => { window.removeEventListener('keydown', handleKeyPress) }
-  }, [handleKeyPress])
-
-  console.log('correctWord ->', correctWord)
-
-  // useEffect(() => {
-  //   console.log('formattedGuesses ->', formattedGuesses)
-  //   console.log('isCorrect ->', isCorrect)
-  // }, [formattedGuesses, isCorrect])
+  }, [handleKeyPress, turn, isCorrect])
 
   return (
-    <div className='flex_center_column gap-4'>
-      <p>00:00</p>
-      <div>
-        <Grid currentGuess={currentGuess} formattedGuesses={formattedGuesses} turn={turn} />
-      </div>
+    <div className='flex_center_column gap-2'>
+      <p>{formatTime(elapsedTime)}</p>
+      <p>{correctWord}</p>
+
+      <Grid
+        currentGuess={currentGuess}
+        formattedGuesses={formattedGuesses}
+        turn={turn}
+      />
+
+      <Keypad
+        usedKeys={usedKeys}
+        handleKeyPress={handleKeyPress}
+      />
     </div>
   )
 }

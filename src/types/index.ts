@@ -4,6 +4,16 @@ export interface CardType {
   found: boolean
 }
 
+// tipos de constantes
+export interface CardImagetype {
+  src: string
+}
+
+export interface KeyPadLetterType {
+  letter: string
+  status: statusLetterType
+}
+
 // tipos de games
 
 export enum statusLetterType {

@@ -154,6 +154,14 @@
   }
 
   .wordle_row > div {
-    @apply block w-12 h-12 sm:w-20 sm:h-20 leading-[48px] sm:leading-[80px] font-bold sm:font-extrabold text-2xl sm:text-4xl m-1 text-center rounded-sm sm:rounded-lg border border-gray-300 bg-[var(--dark-dark)]
+    @apply block w-16 h-16 sm:w-20 sm:h-20 leading-[64px] sm:leading-[80px] font-bold sm:font-extrabold text-2xl sm:text-4xl m-1 text-center rounded-sm sm:rounded-lg border border-gray-300 bg-[var(--dark-dark)]
+  }
+
+  .wordle_keypad {
+    @apply my-4 max-w-[360px] sm:max-w-[500px] flex flex-wrap justify-center gap-1 sm:gap-2 select-none
+  }
+
+  .wordle_keypad > div {
+    @apply w-8 h-10 sm:w-10 sm:h-12 leading-10 sm:leading-[48px] bg-[var(--dark-dark)] inline-block rounded-sm text-center
   }
 }

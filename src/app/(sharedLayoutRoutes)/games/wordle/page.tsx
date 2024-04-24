@@ -2,16 +2,23 @@
 
 import { useEffect, useState } from 'react'
 
+import { useWordle } from '@/hooks/games/use-wordle'
 import getRandomWord from '@/utils/get-random-word'
 import { Button } from '@/components/ui/button'
 import { Wordle } from '@/components'
 
 export default function WordleGamePage() {
   const [correctWord, setCorrectWord] = useState<string>('')
+  const { resetGame } = useWordle(correctWord)
 
   useEffect(() => {
     setCorrectWord(getRandomWord())
   }, [])
+
+  const reset = () => {
+    setCorrectWord(getRandomWord())
+    resetGame()
+  }
 
   return (
     <main className="w-full flex_center_column gap-4">
@@ -22,16 +29,12 @@ export default function WordleGamePage() {
       <Button
         variant="main"
         className='w-auto mb-4'
-        onClick={() => { setCorrectWord(getRandomWord()) }}
+        onClick={reset}
       >
         Nuevo juego
       </Button>
 
       <section className='flex_center_column gap-2 max-w-[700px] w-full'>
-        {/* <div className='w-full flex_center mt-4 px-8'>
-          <span>00:00</span>
-        </div> */}
-
         <Wordle correctWord={correctWord} />
       </section>
     </main>

@@ -1,4 +1,5 @@
 import { Logo, BackButton } from '@/components'
+import { Toaster } from 'sonner'
 
 export default async function RootLayout({
   children
@@ -17,6 +18,7 @@ export default async function RootLayout({
 
       <main className="h-full w-full flex_center_column py-[calc(60px+2vw)]">
         <section className="h-full w-full">
+          <Toaster richColors position='bottom-center' />
           {children}
         </section>
       </main>
