@@ -31,3 +31,6 @@ export { default as Wordle } from './games/wordle/Wordle'
 export { default as Grid } from './games/wordle/Grid'
 export { default as Row } from './games/wordle/Row'
 export { default as Keypad } from './games/wordle/Keypad'
+
+// Minesweeper game components
+export { default as Minesweeper } from './games/minesweeper/Minesweeper'

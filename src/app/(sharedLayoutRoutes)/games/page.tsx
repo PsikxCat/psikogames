@@ -29,7 +29,7 @@ export default function GamesPage() {
         <GameCard
           imageSrc='/psikogames.webp'
           gameName='Buscaminas'
-          playButtonHref='/games/#'
+          playButtonHref='/games/minesweeper'
           statsButtonHref='/games/stats/#'
         >
           <p>Encuentra todas las minas sin explotar.</p>
