@@ -6,6 +6,7 @@ import './minesweeper.css'
 import { type SquareType } from '@/types'
 import { createBoard, findNeighbourMines, revealSquares } from '@/hooks/games'
 import { toast } from 'sonner'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface MinesweeperProps {
   gameConfig: {
@@ -24,16 +25,17 @@ interface MinesweeperRef {
   resetGame: () => void
 }
 
-function Minesweeper(
+function MinesweeperTable(
   { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, isGameFinished, setIsGameFinished }: MinesweeperProps,
   ref: Ref<MinesweeperRef>
 ) {
   const [board, setBoard] = useState<SquareType[][]>([])
   const [resetTrigger, setResetTrigger] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const { ROWS, COLS, MINES, FLAGS } = gameConfig
 
-  // # Efectos /////////////////////////////////////////////
+  // | Efectos | /////////////////////////////////////////////
   // Inicializar el tablero
   useEffect(() => {
     const initBoard = () => {
@@ -56,6 +58,9 @@ function Minesweeper(
     }
 
     setBoard(initBoard())
+    setIsLoading(false)
+
+    // setTimeout(() => { setIsLoading(false) }, 200)
   }, [resetTrigger])
 
   // Actualizar el estado del juego
@@ -77,17 +82,7 @@ function Minesweeper(
     }
   }, [board])
 
-  // # Funciones ///////////////////////////////////////////
-  const resetGame = (): void => {
-    setResetTrigger(true)
-    setIsTimerRunning(false)
-    setElapsedTime(0)
-  }
-
-  useImperativeHandle(ref, () => ({
-    resetGame
-  }))
-
+  // | Funciones | ///////////////////////////////////////////
   const handleClick = (row: number, col: number): void => {
     if (isGameFinished) return
 
@@ -107,6 +102,7 @@ function Minesweeper(
       })
       setBoard(newBoard)
 
+      // Finalizar el juego
       setIsTimerRunning(false)
       setIsGameFinished(true)
       toast.error('¡Has perdido!')
@@ -125,13 +121,24 @@ function Minesweeper(
     }
   }
 
+  const resetGame = (): void => {
+    setResetTrigger(true)
+    setIsTimerRunning(false)
+    setElapsedTime(0)
+  }
+
+  useImperativeHandle(ref, () => ({
+    resetGame
+  }))
+
   return (
-    <div className="grid grid-cols-12 font-extrabold text-stone-800">
-      {board.map((row, i) =>
-        row.map((square, j) => (
+    <div className="grid grid-cols-12 font-extrabold text-stone-800 min-w-[380px]">
+      {!isLoading
+        ? board.map((row, i) =>
+          row.map((square, j) => (
           <div
             key={`${i}-${j}`}
-            className={`flex_center square h-10 w-10
+            className={`flex_center square h-8 w-8 sm:h-10 sm:w-10
               ${square.isRevealed ? 'square--revealed' : ''} ${square.isMine || square.isFlagged ? 'text-xl' : 'text-3xl'}`}
             data-value={square.neighbourMines}
             onClick={() => { handleClick(i, j) }}
@@ -147,10 +154,14 @@ function Minesweeper(
                 ? '🚩'
                 : ''}
           </div>
-        ))
-      )}
+          ))
+        )
+        : Array.from({ length: ROWS * COLS }).map((_, index) => (
+        <Skeleton key={index} className=' h-8 w-8 sm:h-10 sm:w-10 aspect animate-pulse bg-[var(--orange-light)]' />
+        )
+        )}
     </div>
   )
 }
 
-export default forwardRef(Minesweeper)
+export default forwardRef(MinesweeperTable)

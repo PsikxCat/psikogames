@@ -2,8 +2,8 @@
 
 import { useRef, useState } from 'react'
 
-import formatTime from '@/utils/format-time'
-import { CardsTable } from '@/components'
+// import formatTime from '@/utils/format-time'
+import { CardsTable, Timer } from '@/components'
 import { Button } from '@/components/ui/button'
 
 interface CardsTableRef {
@@ -13,6 +13,8 @@ interface CardsTableRef {
 export default function MemoryGamePage() {
   const [turn, setTurn] = useState<number>(0)
   const [elapsedTime, setElapsedTime] = useState<number>(0)
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
+  const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
 
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 
@@ -34,18 +36,29 @@ export default function MemoryGamePage() {
         Nuevo juego
       </Button>
 
-      <div className='flex_center_column gap-2 max-w-[700px] w-full'>
+      <section className='flex_center_column gap-2 max-w-[700px] w-full'>
+        {/* Status */}
         <div className='w-full flex justify-between mt-4 px-8'>
           <span>Turno: {turn}</span>
-          <span>{formatTime(elapsedTime)}</span>
+
+          <Timer
+            isGameFinished={isGameFinished}
+            isTimerRunning={isTimerRunning}
+            setIsTimerRunning={setIsTimerRunning}
+            elapsedTime={elapsedTime}
+            setElapsedTime={setElapsedTime}
+          />
         </div>
 
+        {/* Game */}
         <CardsTable
           ref={cardsTableRef}
           setTurn={setTurn}
           setElapsedTime={setElapsedTime}
+          setIsTimerRunning={setIsTimerRunning}
+          setIsGameFinished={setIsGameFinished}
         />
-      </div>
+      </section>
     </section>
   )
 }

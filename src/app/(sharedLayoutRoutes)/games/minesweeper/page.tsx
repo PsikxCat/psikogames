@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Minesweeper, Timer } from '@/components'
+import { MinesweeperTable, Timer } from '@/components'
 
 const GRID_SIZE = 12
 
@@ -20,8 +20,8 @@ interface MinesweeperRef {
 
 export default function MinesweeperGamePage() {
   const [flags, setFlags] = useState<number>(gameConfig.FLAGS)
-  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [elapsedTime, setElapsedTime] = useState<number>(0)
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
 
   const minesweeperRef = useRef<MinesweeperRef | null>(null)
@@ -44,7 +44,8 @@ export default function MinesweeperGamePage() {
         Nuevo juego
       </Button>
 
-      <div className='flex_center_column gap-2 max-w-[700px]'>
+      <section className='flex_center_column gap-2 max-w-[700px]'>
+          {/* Status */}
           <div className='w-full flex justify-between mt-4 px-3'>
             <span>🚩 {flags}</span>
 
@@ -57,7 +58,8 @@ export default function MinesweeperGamePage() {
             />
           </div>
 
-          <Minesweeper
+          {/* Game */}
+          <MinesweeperTable
             ref={minesweeperRef}
             gameConfig={gameConfig}
             setFlags={setFlags}
@@ -66,7 +68,7 @@ export default function MinesweeperGamePage() {
             isGameFinished={isGameFinished}
             setIsGameFinished={setIsGameFinished}
           />
-        </div>
+        </section>
     </main>
   )
 }

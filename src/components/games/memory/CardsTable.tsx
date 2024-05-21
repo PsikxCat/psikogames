@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import { type Dispatch, type SetStateAction, forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 
 import type { CardType } from '@/types'
 import { cardsImages } from '@/constants'
@@ -8,29 +8,33 @@ import { SingleCard } from '@/components'
 import { Skeleton } from '@/components/ui/skeleton'
 
 interface CardsTableProps {
-  setTurn: (turn: any) => void
-  setElapsedTime: (time: any) => void
+  setTurn: Dispatch<SetStateAction<number>>
+  setElapsedTime: Dispatch<SetStateAction<number>>
+  setIsTimerRunning: Dispatch<SetStateAction<boolean>>
+  setIsGameFinished: Dispatch<SetStateAction<boolean>>
 }
 
 interface CardsTableRef {
   shuffleCards: () => void
 }
 
-function CardsTable({ setTurn, setElapsedTime }: CardsTableProps, ref: React.Ref<CardsTableRef>) {
+function CardsTable(
+  { setTurn, setElapsedTime, setIsTimerRunning, setIsGameFinished }: CardsTableProps, ref: React.Ref<CardsTableRef>
+) {
   const [cards, setCards] = useState<CardType[] | []>([])
   const [choiceOne, setChoiceOne] = useState<CardType | null>(null)
   const [choiceTwo, setChoiceTwo] = useState<CardType | null>(null)
   const [isBoardBlocked, setIsBoardBlocked] = useState<boolean>(false)
-  const [timerRunning, setTimerRunning] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   // | Efectos | /////////////////////////////////////////////
+  // Inicializar las cartas de forma aleatoria
   useEffect(() => {
     shuffleCards()
     setTimeout(() => { setIsLoading(false) }, 500)
-    // setIsLoading(false)
   }, [])
 
+  // Comparar las cartas y actualizar el estado del juego
   useEffect(() => {
     if ((choiceOne && choiceTwo)) {
       setIsBoardBlocked(true)
@@ -44,19 +48,11 @@ function CardsTable({ setTurn, setElapsedTime }: CardsTableProps, ref: React.Ref
     }
   }, [choiceOne, choiceTwo])
 
-  useEffect(() => {
-    if (timerRunning) {
-      const timer = setInterval(() => {
-        setElapsedTime((prevTime: number) => prevTime + 1)
-      }, 1000)
-
-      return () => { clearInterval(timer) }
-    }
-  }, [timerRunning])
-
+  // Parar el temporizador si todas las cartas han sido encontradas
   useEffect(() => {
     if (cards.every((card) => card.found)) {
-      setTimerRunning(false)
+      setIsTimerRunning(false)
+      setIsGameFinished(true)
     }
   }, [cards])
 
@@ -68,7 +64,7 @@ function CardsTable({ setTurn, setElapsedTime }: CardsTableProps, ref: React.Ref
 
     setCards(shuffledCards)
     setTurn(0)
-    setTimerRunning(false)
+    setIsTimerRunning(false)
     setElapsedTime(0)
   }
 
@@ -80,7 +76,7 @@ function CardsTable({ setTurn, setElapsedTime }: CardsTableProps, ref: React.Ref
     if (isBoardBlocked) return
     if (!choiceOne) {
       setChoiceOne(card)
-      setTimerRunning(true)
+      setIsTimerRunning(true)
     } else setChoiceTwo(card)
   }
 
@@ -90,6 +86,7 @@ function CardsTable({ setTurn, setElapsedTime }: CardsTableProps, ref: React.Ref
     setChoiceOne(null)
     setChoiceTwo(null)
     setIsBoardBlocked(false)
+    setIsGameFinished(false)
   }
 
   return (

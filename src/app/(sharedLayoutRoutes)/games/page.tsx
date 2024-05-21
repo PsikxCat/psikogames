@@ -9,7 +9,7 @@ export default function GamesPage() {
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         <GameCard
-          imageSrc='/images/memory-cards.webp'
+          imageSrc='/images/memory-game.webp'
           gameName='Memory'
           playButtonHref='/games/memory'
           statsButtonHref='/games/stats/#memory'
@@ -18,7 +18,7 @@ export default function GamesPage() {
         </GameCard>
 
         <GameCard
-          imageSrc='/psikogames.webp'
+          imageSrc='/images/wordle-game.webp'
           gameName='Wordle'
           playButtonHref='/games/wordle'
           statsButtonHref='/games/stats/#wordle'
@@ -27,7 +27,7 @@ export default function GamesPage() {
         </GameCard>
 
         <GameCard
-          imageSrc='/psikogames.webp'
+          imageSrc='/images/minesweeper-game.webp'
           gameName='Buscaminas'
           playButtonHref='/games/minesweeper'
           statsButtonHref='/games/stats/#'

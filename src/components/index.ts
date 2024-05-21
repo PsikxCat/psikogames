@@ -33,5 +33,5 @@ export { default as Grid } from './games/wordle/Grid'
 export { default as Row } from './games/wordle/Row'
 export { default as Keypad } from './games/wordle/Keypad'
 
-// Minesweeper game components
-export { default as Minesweeper } from './games/minesweeper/Minesweeper'
+// MinesweeperTable game components
+export { default as MinesweeperTable } from './games/minesweeper/MinesweeperTable'

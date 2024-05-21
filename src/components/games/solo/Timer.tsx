@@ -1,7 +1,8 @@
 'use client'
 
-import formatTime from '@/utils/format-time'
 import { useEffect, type Dispatch, type SetStateAction } from 'react'
+
+import formatTime from '@/utils/format-time'
 
 interface TimerProps {
   isGameFinished: boolean

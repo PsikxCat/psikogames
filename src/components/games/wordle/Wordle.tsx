@@ -33,7 +33,6 @@ export default function Wordle({ correctWord }: WordsTableProps) {
   return (
     <div className='flex_center_column gap-2'>
       <p>{formatTime(elapsedTime)}</p>
-      {/* <p>{correctWord}</p> */}
 
       <Grid
         currentGuess={currentGuess}
@@ -48,3 +47,5 @@ export default function Wordle({ correctWord }: WordsTableProps) {
     </div>
   )
 }
+
+// ! TODO: Mejorar la organizacion de la logica (useWordle) e integrar el componente Timer
