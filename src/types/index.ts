@@ -22,3 +22,10 @@ export enum statusLetterType {
   notInWord = 'notInWord',
   unknown = 'unknown'
 }
+
+export interface SquareType {
+  isRevealed: boolean
+  isFlagged: boolean
+  isMine: boolean
+  neighbourMines: number
+}

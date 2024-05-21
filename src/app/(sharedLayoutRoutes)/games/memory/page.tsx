@@ -12,7 +12,7 @@ interface CardsTableRef {
 
 export default function MemoryGamePage() {
   const [turn, setTurn] = useState<number>(0)
-  const [elapsedTime, setElapsedTime] = useState<number>(0) // tipar
+  const [elapsedTime, setElapsedTime] = useState<number>(0)
 
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 

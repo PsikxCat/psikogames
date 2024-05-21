@@ -109,7 +109,6 @@ export function useWordle(correctWord: string) {
     return formattedGuess
   }
 
-  // # TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const addNewGuess = (formattedGuess: { letter: string, status: statusLetterType }[]) => {
     if (correctWord === currentGuess) {
       setIsCorrect(true)

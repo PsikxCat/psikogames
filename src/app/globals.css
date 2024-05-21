@@ -80,7 +80,9 @@
     @apply w-full max-w-3xl flex_center py-4 px-3 md:px-8;
   }
 
-  .bg_orange_gradient {
+  /* se aumenta la especificidad para solucionar error en navegador */
+  button.bg_orange_gradient,
+  a.bg_orange_gradient {
     @apply bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-[var(--orange-light)] to-[var(--red-light)] hover:bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]
   }
 
@@ -100,7 +102,8 @@
     @apply inline-block rotate-180;
   }
 
-  .btn_default {
+  button.btn_default,
+  a.btn_default {
     /* border: 2px solid #FF9B50; */
     border-radius: 0.60em;
     /* font-weight: 700; */

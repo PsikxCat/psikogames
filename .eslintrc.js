@@ -53,6 +53,7 @@ module.exports = {
       '@typescript-eslint/no-misused-promises': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/array-type': 'off',
-      '@typescript-eslint/triple-slash-reference': 'off'
+      '@typescript-eslint/triple-slash-reference': 'off',
+      'react-hooks/exhaustive-deps': 'off',
     }
 }

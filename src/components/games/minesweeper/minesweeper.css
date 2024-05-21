@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+  .square {
+    /* @apply bg-[#adadad]; */
+    @apply bg-[#d37e45];
+    border-top: 3px solid #cfd301;
+    border-left: 3px solid #cfd301;
+    border-right: 3px solid #790303;
+    border-bottom: 3px solid #790303;
+
+    &:hover {
+      @apply bg-[#cfd301];
+    }
+
+    &:active {
+      @apply bg-[#790303];
+      border-top: 3px solid #777;
+      border-left: 3px solid #777;
+      border-right: 3px solid #ddd;
+      border-bottom: 3px solid #ddd;
+    }
+  }
+
+  .square--revealed {
+    @apply border border-[#888] bg-[#353535];
+
+    &:hover {
+      @apply bg-[#353535];
+    }
+
+    &[data-value="1"] {
+      color: #3399ff; /* Azul claro */
+    }
+    &[data-value="2"] {
+      color: #00cc00; /* Verde brillante */
+    }
+    &[data-value="3"] {
+      color: #ff3333; /* Rojo brillante */
+    }
+    &[data-value="4"] {
+      color: #4d4dff; /* Azul medio */
+    }
+    &[data-value="5"] {
+      color: #ff6666; /* Rojo claro */
+    }
+    &[data-value="6"] {
+      color: #66cc00; /* Verde claro */
+    }
+    &[data-value="7"] {
+      color: #ff0000; /* Rojo intenso */
+    }
+    &[data-value="8"] {
+      color: #9933ff; /* Morado claro */
+    }
+  }
+}
