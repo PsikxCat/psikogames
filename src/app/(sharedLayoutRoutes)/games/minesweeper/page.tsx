@@ -3,21 +3,26 @@
 import { useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Minesweeper } from '@/components'
-import formatTime from '@/utils/format-time'
+import { Minesweeper, Timer } from '@/components'
 
-const ROWS = 12
-const COLS = ROWS
-const MINES = Math.floor(ROWS * COLS / 6.66)
-const FLAGS = MINES
+const GRID_SIZE = 12
+
+const gameConfig = {
+  ROWS: GRID_SIZE,
+  COLS: GRID_SIZE,
+  MINES: Math.floor(GRID_SIZE * GRID_SIZE / 6.66),
+  FLAGS: Math.floor(GRID_SIZE * GRID_SIZE / 6.66)
+}
 
 interface MinesweeperRef {
   resetGame: () => void
 }
 
 export default function MinesweeperGamePage() {
-  const [flags, setFlags] = useState<number>(FLAGS)
+  const [flags, setFlags] = useState<number>(gameConfig.FLAGS)
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [elapsedTime, setElapsedTime] = useState<number>(0)
+  const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
 
   const minesweeperRef = useRef<MinesweeperRef | null>(null)
 
@@ -42,17 +47,24 @@ export default function MinesweeperGamePage() {
       <div className='flex_center_column gap-2 max-w-[700px]'>
           <div className='w-full flex justify-between mt-4 px-3'>
             <span>🚩 {flags}</span>
-            <span>{formatTime(elapsedTime)}</span>
+
+            <Timer
+              isGameFinished={isGameFinished}
+              isTimerRunning={isTimerRunning}
+              setIsTimerRunning={setIsTimerRunning}
+              elapsedTime={elapsedTime}
+              setElapsedTime={setElapsedTime}
+            />
           </div>
 
           <Minesweeper
             ref={minesweeperRef}
-            ROWS={ROWS}
-            COLS={COLS}
-            MINES={MINES}
-            FLAGS={FLAGS}
+            gameConfig={gameConfig}
             setFlags={setFlags}
             setElapsedTime={setElapsedTime}
+            setIsTimerRunning={setIsTimerRunning}
+            isGameFinished={isGameFinished}
+            setIsGameFinished={setIsGameFinished}
           />
         </div>
     </main>

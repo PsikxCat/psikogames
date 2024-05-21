@@ -8,25 +8,30 @@ import { createBoard, findNeighbourMines, revealSquares } from '@/hooks/games'
 import { toast } from 'sonner'
 
 interface MinesweeperProps {
-  ROWS: number
-  COLS: number
-  MINES: number
-  FLAGS: number
-  setFlags: (flags: number) => void
+  gameConfig: {
+    ROWS: number
+    COLS: number
+    MINES: number
+    FLAGS: number
+  }
+  setFlags: Dispatch<SetStateAction<number>>
   setElapsedTime: Dispatch<SetStateAction<number>>
+  setIsTimerRunning: Dispatch<SetStateAction<boolean>>
+  isGameFinished: boolean
+  setIsGameFinished: Dispatch<SetStateAction<boolean>>
 }
 interface MinesweeperRef {
   resetGame: () => void
 }
 
 function Minesweeper(
-  { ROWS, COLS, MINES, FLAGS, setFlags, setElapsedTime }: MinesweeperProps,
+  { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, isGameFinished, setIsGameFinished }: MinesweeperProps,
   ref: Ref<MinesweeperRef>
 ) {
   const [board, setBoard] = useState<SquareType[][]>([])
-  const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
   const [resetTrigger, setResetTrigger] = useState<boolean>(false)
-  const [timerRunning, setTimerRunning] = useState<boolean>(false)
+
+  const { ROWS, COLS, MINES, FLAGS } = gameConfig
 
   // # Efectos /////////////////////////////////////////////
   // Inicializar el tablero
@@ -72,23 +77,10 @@ function Minesweeper(
     }
   }, [board])
 
-  // Actualizar el temporizador
-  useEffect(() => {
-    if (isGameFinished) setTimerRunning(false)
-
-    if (timerRunning) {
-      const timer = setInterval(() => {
-        setElapsedTime((prevTime: number) => prevTime + 1)
-      }, 1000)
-
-      return () => { clearInterval(timer) }
-    }
-  }, [timerRunning])
-
   // # Funciones ///////////////////////////////////////////
   const resetGame = (): void => {
     setResetTrigger(true)
-    setTimerRunning(false)
+    setIsTimerRunning(false)
     setElapsedTime(0)
   }
 
@@ -99,7 +91,7 @@ function Minesweeper(
   const handleClick = (row: number, col: number): void => {
     if (isGameFinished) return
 
-    setTimerRunning(true)
+    setIsTimerRunning(true)
 
     const { updatedBoard, gameOver } = revealSquares(board, row, col)
 
@@ -115,7 +107,7 @@ function Minesweeper(
       })
       setBoard(newBoard)
 
-      setTimerRunning(false)
+      setIsTimerRunning(false)
       setIsGameFinished(true)
       toast.error('¡Has perdido!')
     }

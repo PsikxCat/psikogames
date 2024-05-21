@@ -21,6 +21,7 @@ export { default as FormSuccess } from './solo/FormSuccess'
 
 // Games components
 export { default as GameCard } from './games/solo/GameCard'
+export { default as Timer } from './games/solo/Timer'
 
 // Memory game components
 export { default as CardsTable } from './games/memory/CardsTable'
