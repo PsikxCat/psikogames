@@ -1,3 +1,4 @@
+import { type Dispatch, type SetStateAction } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -13,10 +14,10 @@ interface CardWrapperProps {
   imageSrc: string
   gameName: string
   playButtonHref: string
-  statsButtonHref: string
+  setShowModal: Dispatch<SetStateAction<{ show: boolean, game: string }>>
 }
 export default function CardWrapper({
-  children, imageSrc, gameName, playButtonHref, statsButtonHref
+  children, imageSrc, gameName, playButtonHref, setShowModal
 }: CardWrapperProps) {
   return (
     <Card className='min-w-[300px] max-w-[400px] aspect-[3/4] flex_center_column gap-3 shadow-md shadow-primary pb-3 overflow-hidden'>
@@ -38,8 +39,8 @@ export default function CardWrapper({
             <Link href={playButtonHref}>Jugar</Link>
           </Button>
 
-          <Button variant='dark' asChild>
-            <Link href={statsButtonHref}>Stats</Link>
+          <Button variant='dark' onClick={() => { setShowModal({ show: true, game: gameName }) }}>
+            Stats
           </Button>
         </div>
       </CardContent>

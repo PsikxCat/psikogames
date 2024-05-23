@@ -33,7 +33,7 @@ export default function MinesweeperGamePage() {
   return (
     <main className="w-full flex_center_column gap-4">
       <h1 className="text-3xl uppercase text-primary font-semibold">
-        Buscaminas
+        Minesweeper
       </h1>
 
       <Button

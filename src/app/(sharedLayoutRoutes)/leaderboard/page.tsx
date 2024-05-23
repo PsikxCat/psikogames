@@ -1,17 +1,17 @@
-import Link from 'next/link'
+import { getCurrentUser } from '@/lib/auth'
+import { LeaderboardCard } from '@/components'
 
-import { Button } from '@/components/ui/button'
+export default async function LeaderboardPage() {
+  const user = await getCurrentUser()
+  const userName = user!.name!
 
-export default function LeaderboardPage() {
+  // TODO: Capturar la data de la DB, por cada juego renderizar un componente con sus respectivos datos y os datos del usuario logueado asociado a ese juego
+  // Se muestra inicialmente la data global, al hacer click en el icono de persona se muestra la data del usuario logueado
   return (
-    <div className="h-full flex_center_column gap-10">
-      <p>
-        Leaderboard Page
-      </p>
-
-      <Button variant="dark" asChild>
-        <Link href="/home">Home</Link>
-      </Button>
-    </div>
+    <section className="h-full flex_center flex-wrap gap-5 ">
+      <LeaderboardCard game="Memory" user={userName} />
+      <LeaderboardCard game="Wordle" user={userName} />
+      <LeaderboardCard game="Minesweeper" user={userName} />
+    </section>
   )
 }

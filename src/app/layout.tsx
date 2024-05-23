@@ -27,7 +27,7 @@ export default async function RootLayout({
           'min-h-[100svh] w-full flex_center_column tracking-wider',
           orbitron.className
         )}>
-          <main className='wrapper h-full'>
+          <main className='wrapper h-full flex-1'>
             {children}
           </main>
 
