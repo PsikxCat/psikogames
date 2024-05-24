@@ -60,8 +60,8 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     const changeEmailToken = await generateChangeEmailToken(values.email)
 
     await sendChangeEmailEmail(
-      changeEmailToken.email as string,
-      changeEmailToken.token as string
+      changeEmailToken.email,
+      changeEmailToken.token
     )
 
     return { success: 'Sigue el link que enviamos al nuevo correo para validar el cambio.' }

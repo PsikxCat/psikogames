@@ -54,6 +54,7 @@ module.exports = {
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/triple-slash-reference': 'off',
+      '@typescript-eslint/consistent-type-assertions': 'off',
       'react-hooks/exhaustive-deps': 'off',
     }
 }

@@ -8,7 +8,7 @@ export const changeEmail = async (currentEmail: string, token: string, newEmail:
   const existingToken = await getChangeEmailTokenByToken(newEmail, token)
   if (!existingToken) return { error: 'Token invalido!' }
 
-  const hasExpired = new Date(existingToken.expires as Date) < new Date()
+  const hasExpired = new Date(existingToken.expires) < new Date()
   if (hasExpired) return { error: 'Token expirado!' }
 
   const existingUser = await getUserByEmail(currentEmail)
