@@ -3,12 +3,12 @@
 import { useRef, useState } from 'react'
 
 import { type GameStatusType } from '@/types'
-import { CardsTable, FinishGameModal, Timer } from '@/components'
+import { CardsBoard, FinishGameModal, Timer } from '@/components'
 import { Button } from '@/components/ui/button'
 import formatTime from '@/utils/format-time'
 
 interface CardsTableRef {
-  shuffleCards: () => void
+  resetGame: () => void
 }
 
 export default function MemoryGamePage() {
@@ -20,7 +20,7 @@ export default function MemoryGamePage() {
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 
   const resetGame = (): void => {
-    cardsTableRef.current!.shuffleCards()
+    cardsTableRef.current!.resetGame()
   }
 
   return (
@@ -52,7 +52,7 @@ export default function MemoryGamePage() {
         </div>
 
         {/* Game */}
-        <CardsTable
+        <CardsBoard
           ref={cardsTableRef}
           setTurn={setTurn}
           setElapsedTime={setElapsedTime}

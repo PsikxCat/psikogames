@@ -4,14 +4,14 @@ import { Row } from '@/components'
 interface GridProps {
   currentGuess: string
   formattedGuesses: { letter: string, status: statusLetterType }[][]
-  turn: number
+  turns: number
 }
 
-export default function Grid({ currentGuess, formattedGuesses, turn }: GridProps) {
+export default function WordleGrid({ currentGuess, formattedGuesses, turns }: GridProps) {
   return (
     <section className="flex_center_column">
       {formattedGuesses.map((formattedGuess, i) => (
-        i !== turn
+        i !== turns
           ? (
           <Row key={i} formattedGuess={formattedGuess} />
             )

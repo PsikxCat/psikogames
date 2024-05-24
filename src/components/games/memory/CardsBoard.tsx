@@ -15,10 +15,10 @@ interface CardsTableProps {
 }
 
 interface CardsTableRef {
-  shuffleCards: () => void
+  resetGame: () => void
 }
 
-function CardsTable(
+function CardsBoard(
   { setTurn, setElapsedTime, setIsTimerRunning, setGameStatus }: CardsTableProps, ref: React.Ref<CardsTableRef>
 ) {
   const [cards, setCards] = useState<CardType[] | []>([])
@@ -30,7 +30,7 @@ function CardsTable(
   // | Efectos | /////////////////////////////////////////////
   // Inicializar las cartas de forma aleatoria
   useEffect(() => {
-    shuffleCards()
+    resetGame()
     setTimeout(() => { setIsLoading(false) }, 500)
   }, [])
 
@@ -50,6 +50,8 @@ function CardsTable(
 
   // Parar el temporizador si todas las cartas han sido encontradas
   useEffect(() => {
+    if (!cards.length) return
+
     if (cards.every((card) => card.found)) {
       setIsTimerRunning(false)
       setGameStatus({ isGameFinished: true, isGameWon: true })
@@ -57,20 +59,6 @@ function CardsTable(
   }, [cards])
 
   // | Funciones | ///////////////////////////////////////////
-  const shuffleCards = (): void => {
-    const shuffledCards = [...cardsImages, ...cardsImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: crypto.randomUUID(), found: false }))
-
-    setCards(shuffledCards)
-    setTurn(0)
-    setIsTimerRunning(false)
-    setElapsedTime(0)
-  }
-
-  useImperativeHandle(ref, () => ({
-    shuffleCards
-  }))
 
   const handleChoice = (card: CardType): void => {
     if (isBoardBlocked) return
@@ -88,6 +76,21 @@ function CardsTable(
     setIsBoardBlocked(false)
     setGameStatus({ isGameFinished: false, isGameWon: false })
   }
+
+  const resetGame = (): void => {
+    const shuffledCards = [...cardsImages, ...cardsImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: crypto.randomUUID(), found: false }))
+
+    setCards(shuffledCards)
+    setTurn(0)
+    setIsTimerRunning(false)
+    setElapsedTime(0)
+  }
+
+  useImperativeHandle(ref, () => ({
+    resetGame
+  }))
 
   return (
     <section className="px-8 grid grid-cols-4 gap-2 sm:gap-5 sm:grid-cols-5 w-full">
@@ -112,4 +115,4 @@ function CardsTable(
   )
 }
 
-export default forwardRef(CardsTable)
+export default forwardRef(CardsBoard)

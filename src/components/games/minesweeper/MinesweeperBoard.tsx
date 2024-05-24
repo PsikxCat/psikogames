@@ -7,7 +7,7 @@ import { type GameStatusType, type SquareType } from '@/types'
 import { createBoard, findNeighbourMines, revealSquares } from '@/hooks/games'
 import { Skeleton } from '@/components/ui/skeleton'
 
-interface MinesweeperProps {
+interface MinesweeperBoardProps {
   gameConfig: {
     ROWS: number
     COLS: number
@@ -24,8 +24,8 @@ interface MinesweeperRef {
   resetGame: () => void
 }
 
-function MinesweeperTable(
-  { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, gameStatus, setGameStatus }: MinesweeperProps,
+function MinesweeperBoard(
+  { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, gameStatus, setGameStatus }: MinesweeperBoardProps,
   ref: Ref<MinesweeperRef>
 ) {
   const [board, setBoard] = useState<SquareType[][]>([])
@@ -161,4 +161,4 @@ function MinesweeperTable(
   )
 }
 
-export default forwardRef(MinesweeperTable)
+export default forwardRef(MinesweeperBoard)

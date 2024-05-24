@@ -44,6 +44,7 @@ model User {
   accounts                Account[]
   scores                  Score[]
 }
+// TODO: Solicitar un nombre de usuario único (cambiar la captura del nombre desde el provider)
 
 model VerificationToken {
   id        String   @id @default(cuid())

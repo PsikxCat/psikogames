@@ -29,7 +29,7 @@ const bounceAnimation = (status?: statusLetterType) => {
   }
 }
 
-export default function Keypad({ usedKeys, handleKeyPress }: KeypadProps) {
+export default function WordleKeypad({ usedKeys, handleKeyPress }: KeypadProps) {
   const [letters, setLetters] = useState<KeyPadLetterType[]>([])
   useEffect(() => { setLetters(keypadLetters) }, [])
 

@@ -29,14 +29,14 @@ export { default as GameModelForm } from './games/solo/GameModelForm'
 export { default as FinishGameModal } from './games/solo/FinishGameModal'
 
 // Memory game components
-export { default as CardsTable } from './games/memory/CardsTable'
+export { default as CardsBoard } from './games/memory/CardsBoard'
 export { default as SingleCard } from './games/memory/SingleCard'
 
 // Wordle game components
-export { default as Wordle } from './games/wordle/Wordle'
-export { default as Grid } from './games/wordle/Grid'
+export { default as WordleGrid } from './games/wordle/WordleGrid'
 export { default as Row } from './games/wordle/Row'
-export { default as Keypad } from './games/wordle/Keypad'
+export { default as WordleKeypad } from './games/wordle/WordleKeypad'
+export { default as WordleBoard } from './games/wordle/WordleBoard'
 
-// MinesweeperTable game components
-export { default as MinesweeperTable } from './games/minesweeper/MinesweeperTable'
+// MinesweeperBoard game components
+export { default as MinesweeperBoard } from './games/minesweeper/MinesweeperBoard'

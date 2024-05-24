@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 
 import { type GameStatusType } from '@/types'
 import { Button } from '@/components/ui/button'
-import { FinishGameModal, MinesweeperTable, Timer } from '@/components'
+import { FinishGameModal, MinesweeperBoard, Timer } from '@/components'
 import formatTime from '@/utils/format-time'
 
 const GRID_SIZE = 12
@@ -61,7 +61,7 @@ export default function MinesweeperGamePage() {
         </div>
 
         {/* Game */}
-        <MinesweeperTable
+        <MinesweeperBoard
           ref={minesweeperRef}
           gameConfig={gameConfig}
           setFlags={setFlags}
