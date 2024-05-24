@@ -17,7 +17,10 @@ export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
   const [showUser, setShowUser] = useState<boolean>(false)
 
   return (
-    <article className='flex_center_column gap-8 rounded-lg h-[550px] min-w-[350px] w-[400px] bg-[var(--dark-dark)] py-2'>
+    <article
+      className='flex_center_column gap-8 rounded-lg h-[550px] min-w-[350px] w-[400px] bg-[var(--dark-dark)] py-2 z-50'
+      onClick={(e) => { e.stopPropagation() }}
+    >
       <p className='text-2xl uppercase text-center text-primary font-bold'>{game}</p>
 
       {/* mapear la data pasandola a componente Item (x2) */}

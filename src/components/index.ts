@@ -25,6 +25,8 @@ export { default as Timer } from './games/solo/Timer'
 export { default as LeaderboardCard } from './games/solo/LeaderboardCard'
 export { default as LeaderboardItem } from './games/solo/LeaderboardItem'
 export { default as StatsModal } from './games/solo/StatsModal'
+export { default as GameModelForm } from './games/solo/GameModelForm'
+export { default as FinishGameModal } from './games/solo/FinishGameModal'
 
 // Memory game components
 export { default as CardsTable } from './games/memory/CardsTable'

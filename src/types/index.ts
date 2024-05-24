@@ -29,3 +29,8 @@ export interface SquareType {
   isMine: boolean
   neighbourMines: number
 }
+
+export interface GameStatusType {
+  isGameFinished: boolean
+  isGameWon: boolean
+}

@@ -2,7 +2,7 @@
 
 import { type Dispatch, type SetStateAction, forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 
-import type { CardType } from '@/types'
+import type { CardType, GameStatusType } from '@/types'
 import { cardsImages } from '@/constants'
 import { SingleCard } from '@/components'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -11,7 +11,7 @@ interface CardsTableProps {
   setTurn: Dispatch<SetStateAction<number>>
   setElapsedTime: Dispatch<SetStateAction<number>>
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>
-  setIsGameFinished: Dispatch<SetStateAction<boolean>>
+  setGameStatus: Dispatch<SetStateAction<GameStatusType>>
 }
 
 interface CardsTableRef {
@@ -19,7 +19,7 @@ interface CardsTableRef {
 }
 
 function CardsTable(
-  { setTurn, setElapsedTime, setIsTimerRunning, setIsGameFinished }: CardsTableProps, ref: React.Ref<CardsTableRef>
+  { setTurn, setElapsedTime, setIsTimerRunning, setGameStatus }: CardsTableProps, ref: React.Ref<CardsTableRef>
 ) {
   const [cards, setCards] = useState<CardType[] | []>([])
   const [choiceOne, setChoiceOne] = useState<CardType | null>(null)
@@ -52,7 +52,7 @@ function CardsTable(
   useEffect(() => {
     if (cards.every((card) => card.found)) {
       setIsTimerRunning(false)
-      setIsGameFinished(true)
+      setGameStatus({ isGameFinished: true, isGameWon: true })
     }
   }, [cards])
 
@@ -86,7 +86,7 @@ function CardsTable(
     setChoiceOne(null)
     setChoiceTwo(null)
     setIsBoardBlocked(false)
-    setIsGameFinished(false)
+    setGameStatus({ isGameFinished: false, isGameWon: false })
   }
 
   return (

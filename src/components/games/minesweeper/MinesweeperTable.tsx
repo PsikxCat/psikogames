@@ -3,9 +3,8 @@
 import { type Dispatch, type SetStateAction, forwardRef, useEffect, useImperativeHandle, useState, type Ref } from 'react'
 
 import './minesweeper.css'
-import { type SquareType } from '@/types'
+import { type GameStatusType, type SquareType } from '@/types'
 import { createBoard, findNeighbourMines, revealSquares } from '@/hooks/games'
-import { toast } from 'sonner'
 import { Skeleton } from '@/components/ui/skeleton'
 
 interface MinesweeperProps {
@@ -18,15 +17,15 @@ interface MinesweeperProps {
   setFlags: Dispatch<SetStateAction<number>>
   setElapsedTime: Dispatch<SetStateAction<number>>
   setIsTimerRunning: Dispatch<SetStateAction<boolean>>
-  isGameFinished: boolean
-  setIsGameFinished: Dispatch<SetStateAction<boolean>>
+  gameStatus: { isGameFinished: boolean, isGameWon: boolean }
+  setGameStatus: Dispatch<SetStateAction<GameStatusType>>
 }
 interface MinesweeperRef {
   resetGame: () => void
 }
 
 function MinesweeperTable(
-  { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, isGameFinished, setIsGameFinished }: MinesweeperProps,
+  { gameConfig, setFlags, setElapsedTime, setIsTimerRunning, gameStatus, setGameStatus }: MinesweeperProps,
   ref: Ref<MinesweeperRef>
 ) {
   const [board, setBoard] = useState<SquareType[][]>([])
@@ -53,22 +52,20 @@ function MinesweeperTable(
     }
 
     if (resetTrigger) {
-      setIsGameFinished(false)
+      setGameStatus({ isGameFinished: false, isGameWon: false })
       setResetTrigger(false)
     }
 
     setBoard(initBoard())
     setIsLoading(false)
-
-    // setTimeout(() => { setIsLoading(false) }, 200)
   }, [resetTrigger])
 
   // Actualizar el estado del juego
   useEffect(() => {
     if (!board.length) return
 
-    const flags = board.flat().filter((square) => square.isFlagged).length
-    setFlags(FLAGS - flags)
+    const raisedFlags = board.flat().filter((square) => square.isFlagged).length
+    setFlags(FLAGS - raisedFlags)
 
     const isGameWon =
       board.flat().every((square) => square.isRevealed || square.isMine) ||
@@ -78,13 +75,14 @@ function MinesweeperTable(
         .every((square) => square.isFlagged)
 
     if (isGameWon) {
-      toast.success('¡Has ganado!')
+      setIsTimerRunning(false)
+      setGameStatus({ isGameFinished: true, isGameWon: true })
     }
   }, [board])
 
   // | Funciones | ///////////////////////////////////////////
   const handleClick = (row: number, col: number): void => {
-    if (isGameFinished) return
+    if (gameStatus.isGameFinished) return
 
     setIsTimerRunning(true)
 
@@ -104,15 +102,14 @@ function MinesweeperTable(
 
       // Finalizar el juego
       setIsTimerRunning(false)
-      setIsGameFinished(true)
-      toast.error('¡Has perdido!')
+      setGameStatus({ isGameFinished: true, isGameWon: false })
     }
   }
 
   const handleRightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, row: number, col: number): void => {
     e.preventDefault()
 
-    if (isGameFinished) return
+    if (gameStatus.isGameFinished) return
 
     if (!board[row][col].isRevealed) {
       const newBoard = board.map((row) => row.slice())
@@ -149,7 +146,7 @@ function MinesweeperTable(
                   ? square.neighbourMines === 0
                     ? ''
                     : square.neighbourMines
-                  : '💣'
+                  : '💥'
               : square.isFlagged
                 ? '🚩'
                 : ''}

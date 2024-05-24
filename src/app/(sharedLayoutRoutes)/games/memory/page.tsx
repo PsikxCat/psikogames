@@ -2,9 +2,10 @@
 
 import { useRef, useState } from 'react'
 
-// import formatTime from '@/utils/format-time'
-import { CardsTable, Timer } from '@/components'
+import { type GameStatusType } from '@/types'
+import { CardsTable, FinishGameModal, Timer } from '@/components'
 import { Button } from '@/components/ui/button'
+import formatTime from '@/utils/format-time'
 
 interface CardsTableRef {
   shuffleCards: () => void
@@ -14,11 +15,11 @@ export default function MemoryGamePage() {
   const [turn, setTurn] = useState<number>(0)
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
-  const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
+  const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
 
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 
-  const startNewGame = (): void => {
+  const resetGame = (): void => {
     cardsTableRef.current!.shuffleCards()
   }
 
@@ -31,7 +32,7 @@ export default function MemoryGamePage() {
       <Button
         variant="main"
         className='w-auto'
-        onClick={startNewGame}
+        onClick={resetGame}
       >
         Nuevo juego
       </Button>
@@ -42,7 +43,7 @@ export default function MemoryGamePage() {
           <span>Turno: {turn}</span>
 
           <Timer
-            isGameFinished={isGameFinished}
+            isGameFinished={gameStatus.isGameFinished}
             isTimerRunning={isTimerRunning}
             setIsTimerRunning={setIsTimerRunning}
             elapsedTime={elapsedTime}
@@ -56,8 +57,18 @@ export default function MemoryGamePage() {
           setTurn={setTurn}
           setElapsedTime={setElapsedTime}
           setIsTimerRunning={setIsTimerRunning}
-          setIsGameFinished={setIsGameFinished}
+          setGameStatus={setGameStatus}
         />
+
+        {/* Finish Game Modal */}
+        {gameStatus.isGameFinished && (
+          <FinishGameModal
+            setGameStatus={setGameStatus}
+            isGameWon={gameStatus.isGameWon}
+            resetGame={resetGame}
+            mainLabel={formatTime(elapsedTime)}
+          />
+        )}
       </section>
     </section>
   )

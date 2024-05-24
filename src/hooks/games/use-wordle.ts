@@ -16,6 +16,7 @@ export function useWordle(correctWord: string) {
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [timerRunning, setTimerRunning] = useState<boolean>(false)
   const [usedKeys, setUsedKeys] = useState<KeyPadLetterType[]>([])
+  // const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
 
   useEffect(() => {
     if (timerRunning) {
@@ -111,6 +112,7 @@ export function useWordle(correctWord: string) {
 
   const addNewGuess = (formattedGuess: { letter: string, status: statusLetterType }[]) => {
     if (correctWord === currentGuess) {
+      // setIsGameFinished(true)
       setIsCorrect(true)
       setTimerRunning(false)
     } else if (turn === 5 && !isCorrect) {
@@ -160,5 +162,6 @@ export function useWordle(correctWord: string) {
     elapsedTime,
     resetGame,
     usedKeys
+    // isGameFinished
   }
 }

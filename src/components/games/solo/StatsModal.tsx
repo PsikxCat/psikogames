@@ -8,7 +8,7 @@ interface StatsModalProps {
 
 export default function StatsModal({ gameName, user }: StatsModalProps) {
   return (
-    <div className='bg-black/80 flex_center text-center absolute inset-0'>
+    <div className='bg-black/80 flex_center text-center fixed top-0 left-0 w-full h-full'>
       <LeaderboardCard game={gameName} user={user} />
     </div>
   )

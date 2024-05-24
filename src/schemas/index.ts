@@ -60,3 +60,18 @@ export const SettingsSchema = z.object({
   message: 'Ambos campos, contraseña y nueva contraseña, son requeridos',
   path: ['newPassword']
 })
+
+export const NewGameModelSchema = z.object({
+  name: z.string().min(3, {
+    message: 'El nombre debe tener al menos 3 caracteres'
+  }),
+  description: z.string().min(3, {
+    message: 'La descripción debe tener al menos 3 caracteres'
+  })
+  // instructions: z.string().min(3, {
+  //   message: 'Las instrucciones deben tener al menos 3 caracteres'
+  // }),
+  // image: z.string().url({
+  //   message: 'Ingresa una URL válida'
+  // })
+})

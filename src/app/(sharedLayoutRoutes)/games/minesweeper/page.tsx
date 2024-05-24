@@ -2,8 +2,10 @@
 
 import { useRef, useState } from 'react'
 
+import { type GameStatusType } from '@/types'
 import { Button } from '@/components/ui/button'
-import { MinesweeperTable, Timer } from '@/components'
+import { FinishGameModal, MinesweeperTable, Timer } from '@/components'
+import formatTime from '@/utils/format-time'
 
 const GRID_SIZE = 12
 
@@ -22,11 +24,11 @@ export default function MinesweeperGamePage() {
   const [flags, setFlags] = useState<number>(gameConfig.FLAGS)
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
-  const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
+  const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
 
   const minesweeperRef = useRef<MinesweeperRef | null>(null)
 
-  const startNewGame = (): void => {
+  const resetGame = (): void => {
     minesweeperRef.current!.resetGame()
   }
 
@@ -39,36 +41,46 @@ export default function MinesweeperGamePage() {
       <Button
         variant="main"
         className='w-auto mb-4'
-        onClick={startNewGame}
+        onClick={resetGame}
       >
         Nuevo juego
       </Button>
 
       <section className='flex_center_column gap-2 max-w-[700px]'>
-          {/* Status */}
-          <div className='w-full flex justify-between mt-4 px-3'>
-            <span>🚩 {flags}</span>
+        {/* Status */}
+        <div className='w-full flex justify-between mt-4 px-3'>
+          <span>🚩 {flags}</span>
 
-            <Timer
-              isGameFinished={isGameFinished}
-              isTimerRunning={isTimerRunning}
-              setIsTimerRunning={setIsTimerRunning}
-              elapsedTime={elapsedTime}
-              setElapsedTime={setElapsedTime}
-            />
-          </div>
-
-          {/* Game */}
-          <MinesweeperTable
-            ref={minesweeperRef}
-            gameConfig={gameConfig}
-            setFlags={setFlags}
-            setElapsedTime={setElapsedTime}
+          <Timer
+            isGameFinished={gameStatus.isGameFinished}
+            isTimerRunning={isTimerRunning}
             setIsTimerRunning={setIsTimerRunning}
-            isGameFinished={isGameFinished}
-            setIsGameFinished={setIsGameFinished}
+            elapsedTime={elapsedTime}
+            setElapsedTime={setElapsedTime}
           />
-        </section>
+        </div>
+
+        {/* Game */}
+        <MinesweeperTable
+          ref={minesweeperRef}
+          gameConfig={gameConfig}
+          setFlags={setFlags}
+          setElapsedTime={setElapsedTime}
+          setIsTimerRunning={setIsTimerRunning}
+          gameStatus={gameStatus}
+          setGameStatus={setGameStatus}
+        />
+      </section>
+
+      {/* Finish Game Modal */}
+      {gameStatus.isGameFinished && (
+        <FinishGameModal
+          setGameStatus={setGameStatus}
+          isGameWon={gameStatus.isGameWon}
+          resetGame={resetGame}
+          mainLabel={formatTime(elapsedTime)}
+        />
+      )}
     </main>
   )
 }
