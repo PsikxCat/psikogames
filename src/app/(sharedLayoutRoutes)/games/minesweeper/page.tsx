@@ -3,9 +3,10 @@
 import { useRef, useState } from 'react'
 
 import { type GameStatusType } from '@/types'
+import formatTime from '@/utils/format-time'
+import { useCreateScore } from '@/hooks/games'
 import { Button } from '@/components/ui/button'
 import { FinishGameModal, MinesweeperBoard, Timer } from '@/components'
-import formatTime from '@/utils/format-time'
 
 const GRID_SIZE = 12
 
@@ -25,6 +26,8 @@ export default function MinesweeperGamePage() {
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
+
+  useCreateScore({ gameName: 'minesweeper', gameStatus, elapsedTime })
 
   const minesweeperRef = useRef<MinesweeperRef | null>(null)
 

@@ -1,11 +1,15 @@
-import { db } from '@/lib/db'
+'use server'
 
-export const getGameByName = async (name: string) => {
+import { db } from '@/lib/db'
+import { type GameResponseType } from '@/types'
+
+export const getGameByName = async (name: string): Promise<{ success: boolean, error?: string, data?: GameResponseType }> => {
   try {
     const game = await db.game.findUnique({ where: { name } })
-    return game
+    if (!game) { return { success: false, error: 'Juego no encontrado' } }
+
+    return { success: true, data: game }
   } catch (error) {
-    console.error(`Error obteniendo juego ${name}`, error)
-    return null
+    return { success: false, error: 'Error obteniendo juego' }
   }
 }

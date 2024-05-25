@@ -3,9 +3,10 @@
 import { useRef, useState } from 'react'
 
 import { type GameStatusType } from '@/types'
+import formatTime from '@/utils/format-time'
+import { useCreateScore } from '@/hooks/games'
 import { CardsBoard, FinishGameModal, Timer } from '@/components'
 import { Button } from '@/components/ui/button'
-import formatTime from '@/utils/format-time'
 
 interface CardsTableRef {
   resetGame: () => void
@@ -16,6 +17,8 @@ export default function MemoryGamePage() {
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
+
+  useCreateScore({ gameName: 'memory', gameStatus, elapsedTime })
 
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 

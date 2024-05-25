@@ -34,3 +34,9 @@ export interface GameStatusType {
   isGameFinished: boolean
   isGameWon: boolean
 }
+
+export interface GameResponseType {
+  id: string
+  name: string
+  description: string
+}

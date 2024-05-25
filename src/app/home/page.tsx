@@ -5,8 +5,8 @@ export default async function HomePage() {
   const session = await auth()
 
   return (
-    <main className="flex min-h-[70svh] flex-col items-center justify-between gap-5">
-      <div className='min-w-[400px] pt-20'>
+    <main className="flex_center_column min-h-[70svh] gap-5">
+      <div className='min-w-[400px] pt-20 flex_center'>
         <Logo size='xl' />
       </div>
 

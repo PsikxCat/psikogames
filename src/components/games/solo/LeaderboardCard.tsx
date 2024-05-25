@@ -13,8 +13,7 @@ interface LeaderboardCardProps {
 
 export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
   // Recibir la data (puntaje global y del user) del componente padre y renderizarla
-  // Crear el estado que determinara si se muestra la data global o del usuario logueado
-  const [showUser, setShowUser] = useState<boolean>(false)
+  const [showUserStats, setShowUserStats] = useState<boolean>(false)
 
   return (
     <article
@@ -24,7 +23,7 @@ export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
       <p className='text-2xl uppercase text-center text-primary font-bold'>{game}</p>
 
       {/* mapear la data pasandola a componente Item (x2) */}
-      { showUser
+      { showUserStats
         ? (
         <section className='flex_center_column gap-2 w-full'>
           {/* mapeo hardcodeado */}
@@ -47,7 +46,7 @@ export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
           <Button
             variant="dark"
             className='w-auto'
-            onClick={() => { setShowUser(false) }}
+            onClick={() => { setShowUserStats(false) }}
           >
             <GlobeIcon className='h-5 w-5' />
           </Button>
@@ -55,7 +54,7 @@ export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
           <Button
             variant="dark"
             className='w-auto'
-            onClick={() => { setShowUser(true) }}
+            onClick={() => { setShowUserStats(true) }}
           >
               <PersonIcon className='h-5 w-5' />
           </Button>

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { type GameStatusType } from '@/types'
 import getRandomWord from '@/utils/get-random-word'
 import formatTime from '@/utils/format-time'
+import { useCreateScore } from '@/hooks/games'
 import { Button } from '@/components/ui/button'
 import { FinishGameModal, Timer, WordleBoard } from '@/components'
 
@@ -18,6 +19,8 @@ export default function WordleGamePage() {
   const [elapsedTime, setElapsedTime] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
+
+  useCreateScore({ gameName: 'wordle', gameStatus, elapsedTime })
 
   const wordleRef = useRef<WordleRef | null>(null)
 

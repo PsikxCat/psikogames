@@ -75,3 +75,9 @@ export const NewGameModelSchema = z.object({
   //   message: 'Ingresa una URL válida'
   // })
 })
+
+export const ScoreSchema = z.object({
+  gameId: z.string(),
+  userId: z.string(),
+  score: z.number().int()
+})

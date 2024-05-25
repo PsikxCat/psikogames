@@ -1,3 +1,6 @@
+// Games
+export { default as useCreateScore } from './use-create-score'
+
 // Wordle
 export { default as formatGuessObject } from './wordle/use-format-guess-object'
 
