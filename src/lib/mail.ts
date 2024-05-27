@@ -8,7 +8,7 @@ import {
 
 // email de verificacion
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}&email=${email}`
+  const confirmLink = `${process.env.BASE_URL}/auth/new-verification?token=${token}&email=${email}`
 
   try {
     await transporter.sendMail({
