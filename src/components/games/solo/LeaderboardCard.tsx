@@ -1,48 +1,55 @@
 'use client'
 
+import { useContext, useState } from 'react'
 import { PersonIcon, GlobeIcon } from '@radix-ui/react-icons'
 
+import { GamesContext } from '@/context/games-context/GamesContext'
 import { Button } from '@/components/ui/button'
-import LeaderboardItem from './LeaderboardItem'
-import { useState } from 'react'
+import { LeaderboardItem } from '@/components'
 
 interface LeaderboardCardProps {
-  game: string
-  user: string
+  gameName: string
+  userId: string
 }
 
-export default function LeaderboardCard({ game, user }: LeaderboardCardProps) {
-  // Recibir la data (puntaje global y del user) del componente padre y renderizarla
+export default function LeaderboardCard({ gameName, userId }: LeaderboardCardProps) {
   const [showUserStats, setShowUserStats] = useState<boolean>(false)
+  const { scoresData } = useContext(GamesContext)
+
+  const gameScores = scoresData.filter((score) => score.gameName === gameName).sort((a, b) => a.value - b.value).slice(0, 10)
+  const userScores = scoresData.filter((score) => score.userId === userId && score.gameName === gameName).sort((a, b) => a.value - b.value).slice(0, 10)
+
+  const defaultData = Array(10).fill(null).map((_, index) => ({
+    position: index + 1,
+    userName: '------',
+    score: 0
+  }))
+
+  const scoresToShow = showUserStats ? userScores : gameScores
+  scoresToShow.forEach((score, index) => {
+    defaultData[index] = {
+      position: index + 1,
+      userName: score.userName,
+      score: score.value
+    }
+  })
 
   return (
     <article
-      className='flex_center_column gap-8 rounded-lg h-[550px] min-w-[350px] w-[400px] bg-[var(--dark-dark)] py-2 z-50'
+      className='flex flex-col items-center justify-between gap-8 rounded-lg h-[550px] min-w-[350px] w-[400px] bg-[var(--dark-dark)] py-6 z-50'
       onClick={(e) => { e.stopPropagation() }}
     >
-      <p className='text-2xl uppercase text-center text-primary font-bold'>{game}</p>
+      <div className='w-full flex flex-col items-center gap-8'>
+        <p className='text-2xl uppercase text-center text-primary font-bold'>{gameName}</p>
 
-      {/* mapear la data pasandola a componente Item (x2) */}
-      { showUserStats
-        ? (
         <section className='flex_center_column gap-2 w-full'>
-          {/* mapeo hardcodeado */}
-          {[...Array(10)].map((_, index) => (
-            <LeaderboardItem key={index} data={index} />
+          {defaultData.map(({ position, userName, score }, index) => (
+            <LeaderboardItem key={index} position={position} userName={userName} score={score} />
           ))}
         </section>
-          )
-        : (
-        <section className='flex_center_column gap-2 w-full'>
-          {/* mapeo hardcodeado */}
-          {[...Array(10)].map((_, index) => (
-            <LeaderboardItem key={index} data={10} />
-          ))}
-        </section>
-          )
-      }
+      </div>
 
-      <div className='flex self-end px-6 gap-3'>
+      <div className='flex self-end px-8 pb-4 gap-3'>
           <Button
             variant="dark"
             className='w-auto'

@@ -9,7 +9,7 @@ export const createGameModel = async (values: z.infer<typeof NewGameModelSchema>
   const validateFields = NewGameModelSchema.safeParse(values)
   if (!validateFields.success) return { error: 'Datos invalidos!' }
 
-  const { name, description } = validateFields.data
+  const { name, description, imageUrl } = validateFields.data
 
   const existingGameModel = await db.game.findFirst({
     where: { name }
@@ -22,7 +22,8 @@ export const createGameModel = async (values: z.infer<typeof NewGameModelSchema>
   const gameModel = await db.game.create({
     data: {
       name,
-      description
+      description,
+      imageUrl
     }
   })
 

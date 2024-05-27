@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { type GameStatusType } from '@/types'
-import getRandomWord from '@/utils/get-random-word'
 import formatTime from '@/utils/format-time'
+import getRandomWord from '@/utils/get-random-word'
 import { useCreateScore } from '@/hooks/games'
-import { Button } from '@/components/ui/button'
 import { FinishGameModal, Timer, WordleBoard } from '@/components'
+import { Button } from '@/components/ui/button'
 
 interface WordleRef {
   resetGame: () => void
@@ -20,7 +21,11 @@ export default function WordleGamePage() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
 
-  useCreateScore({ gameName: 'wordle', gameStatus, elapsedTime })
+  const searchParams = useSearchParams()
+  const gameId = searchParams.get('game-id')!
+  const gameName = searchParams.get('game-name')!
+
+  useCreateScore({ gameName, gameId, gameStatus, elapsedTime })
 
   const wordleRef = useRef<WordleRef | null>(null)
 

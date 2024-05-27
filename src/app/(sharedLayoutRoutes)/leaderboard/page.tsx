@@ -1,17 +1,22 @@
-import { getCurrentUser } from '@/lib/auth'
+'use client'
+
+import { useContext } from 'react'
+
+import { GamesContext } from '@/context/games-context/GamesContext'
 import { LeaderboardCard } from '@/components'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
-export default async function LeaderboardPage() {
-  const user = await getCurrentUser()
-  const userName = user!.name!
+export default function LeaderboardPage() {
+  const { gamesData } = useContext(GamesContext)
 
-  // TODO: Capturar la data de la DB, por cada juego renderizar un componente con sus respectivos datos y os datos del usuario logueado asociado a ese juego
-  // Se muestra inicialmente la data global, al hacer click en el icono de persona se muestra la data del usuario logueado
+  const user = useCurrentUser()
+  const userId = user?.id
+
   return (
     <section className="h-full flex_center flex-wrap gap-5 ">
-      <LeaderboardCard game="Memory" user={userName} />
-      <LeaderboardCard game="Wordle" user={userName} />
-      <LeaderboardCard game="Minesweeper" user={userName} />
+      {gamesData.map((game, index) => (
+        <LeaderboardCard key={index} gameName={game.name} userId={userId!} />
+      ))}
     </section>
   )
 }

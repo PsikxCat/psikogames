@@ -39,4 +39,14 @@ export interface GameResponseType {
   id: string
   name: string
   description: string
+  imageUrl: string
+}
+
+export interface ScoreResponseType {
+  id: string
+  value: number
+  userId: string
+  userName: string
+  gameId: string
+  gameName: string
 }

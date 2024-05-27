@@ -2,11 +2,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import {
-  Card,
-  CardHeader,
-  CardContent
-} from '@/components/ui/card'
+import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 interface CardWrapperProps {
@@ -14,7 +10,7 @@ interface CardWrapperProps {
   imageSrc: string
   gameName: string
   playButtonHref: string
-  setShowModal: Dispatch<SetStateAction<{ show: boolean, game: string }>>
+  setShowModal: Dispatch<SetStateAction<{ show: boolean, gameName: string }>>
 }
 export default function CardWrapper({
   children, imageSrc, gameName, playButtonHref, setShowModal
@@ -39,7 +35,7 @@ export default function CardWrapper({
             <Link href={playButtonHref}>Jugar</Link>
           </Button>
 
-          <Button variant='dark' onClick={() => { setShowModal({ show: true, game: gameName }) }}>
+          <Button variant='dark' onClick={() => { setShowModal({ show: true, gameName }) }}>
             Stats
           </Button>
         </div>

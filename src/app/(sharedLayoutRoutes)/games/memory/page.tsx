@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { type GameStatusType } from '@/types'
 import formatTime from '@/utils/format-time'
@@ -18,7 +19,11 @@ export default function MemoryGamePage() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
 
-  useCreateScore({ gameName: 'memory', gameStatus, elapsedTime })
+  const searchParams = useSearchParams()
+  const gameId = searchParams.get('game-id')!
+  const gameName = searchParams.get('game-name')!
+
+  useCreateScore({ gameName, gameId, gameStatus, elapsedTime })
 
   const cardsTableRef = useRef<CardsTableRef | null>(null)
 

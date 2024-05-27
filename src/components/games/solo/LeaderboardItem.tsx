@@ -1,16 +1,20 @@
+import formatTime from '@/utils/format-time'
+
 interface LeaderboardItemProps {
-  data: any // ! TODO: Definir tipo de data
+  position: number
+  userName: string
+  score: number
 }
 
-export default function LeaderboardItem({ data }: LeaderboardItemProps) {
+export default function LeaderboardItem({ position, userName, score }: LeaderboardItemProps) {
   return (
-    <div className='flex justify-between w-[75%]'>
-      <div className='flex gap-4'>
-        <span className='w-4 text-center text-secondary'>{data + 1}</span>
-        <p className='text-xl'>Rick</p>
+    <div className='flex justify-between w-[75%] h-7'>
+      <div className='flex items-center gap-4'>
+        <span className='w-4 text-center text-secondary'>{position}</span>
+        <p className='text-sm uppercase font-bold'>{userName}</p>
       </div>
 
-      <p className='text-xl'>98</p>
+      <p className='text-sm'>{ score === 0 ? '--:--' : formatTime(score) }</p>
     </div>
 
   )

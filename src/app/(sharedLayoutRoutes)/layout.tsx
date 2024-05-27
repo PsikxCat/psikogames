@@ -2,6 +2,8 @@ import { Logo, BackButton } from '@/components'
 import Link from 'next/link'
 import { Toaster } from 'sonner'
 
+import GamesProvider from '../../context/games-context/GamesProvider'
+
 export default async function RootLayout({
   children
 }: Readonly<{
@@ -20,10 +22,12 @@ export default async function RootLayout({
       </nav>
 
       <main className="h-full w-full flex_center_column pt-[calc(60px+2vw)] pb-[calc(40px+2vw)]">
-        <section className="h-full w-full">
-          <Toaster richColors position='bottom-center' />
-          {children}
-        </section>
+        <GamesProvider>
+          <section className="h-full w-full">
+            <Toaster richColors position='bottom-center' />
+            {children}
+          </section>
+        </GamesProvider>
       </main>
     </section>
   )

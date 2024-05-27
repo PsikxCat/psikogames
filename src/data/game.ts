@@ -1,15 +1,27 @@
 'use server'
 
 import { db } from '@/lib/db'
-import { type GameResponseType } from '@/types'
+import { type ScoreResponseType, type GameResponseType } from '@/types'
 
-export const getGameByName = async (name: string): Promise<{ success: boolean, error?: string, data?: GameResponseType }> => {
+// Obtener todos los juegos
+export const getGames = async (): Promise<{ success: boolean, error?: string, data?: GameResponseType[] }> => {
   try {
-    const game = await db.game.findUnique({ where: { name } })
-    if (!game) { return { success: false, error: 'Juego no encontrado' } }
-
-    return { success: true, data: game }
+    const games = await db.game.findMany()
+    if (!games) { return { success: false, error: 'Juegos no encontrados' } }
+    return { success: true, data: games }
   } catch (error) {
-    return { success: false, error: 'Error obteniendo juego' }
+    return { success: false, error: 'Error obteniendo juegos' }
+  }
+}
+
+// Obtener todos los puntajes
+export const getScores = async (): Promise<{ success: boolean, error?: string, data?: ScoreResponseType[] }> => {
+  try {
+    const scores = await db.score.findMany({ orderBy: { value: 'asc' } })
+    if (!scores) { return { success: false, error: 'Puntajes no encontrados' } }
+
+    return { success: true, data: scores }
+  } catch (error) {
+    return { success: false, error: 'Error obteniendo puntajes' }
   }
 }

@@ -29,7 +29,8 @@ export default function GameModelForm() {
     resolver: zodResolver(NewGameModelSchema),
     defaultValues: {
       name: '',
-      description: ''
+      description: '',
+      imageUrl: ''
     }
   })
 
@@ -94,6 +95,26 @@ export default function GameModelForm() {
                   <FormControl>
                     <Textarea
                       className='bg-white text-black'
+                      {...field}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* url de imagen */}
+            <FormField
+              control={form.control}
+              name='imageUrl'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor='imageUrl'>URL de imagen</FormLabel>
+
+                  <FormControl>
+                    <Input
+                      type='text'
                       {...field}
                     />
                   </FormControl>

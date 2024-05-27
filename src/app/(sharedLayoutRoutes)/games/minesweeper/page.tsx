@@ -1,12 +1,13 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { type GameStatusType } from '@/types'
 import formatTime from '@/utils/format-time'
 import { useCreateScore } from '@/hooks/games'
-import { Button } from '@/components/ui/button'
 import { FinishGameModal, MinesweeperBoard, Timer } from '@/components'
+import { Button } from '@/components/ui/button'
 
 const GRID_SIZE = 12
 
@@ -27,7 +28,11 @@ export default function MinesweeperGamePage() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [gameStatus, setGameStatus] = useState<GameStatusType>({ isGameFinished: false, isGameWon: false })
 
-  useCreateScore({ gameName: 'minesweeper', gameStatus, elapsedTime })
+  const searchParams = useSearchParams()
+  const gameId = searchParams.get('game-id')!
+  const gameName = searchParams.get('game-name')!
+
+  useCreateScore({ gameName, gameId, gameStatus, elapsedTime })
 
   const minesweeperRef = useRef<MinesweeperRef | null>(null)
 

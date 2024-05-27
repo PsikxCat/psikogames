@@ -92,6 +92,7 @@ model Game {
   id          String    @id @default(cuid())
   name        String    @unique
   description String
+  imageUrl    String
   scores      Score[]
 }
 
@@ -99,9 +100,9 @@ model Score {
   id      String  @id @default(cuid())
   value   Int
   userId  String
+  userName String
   gameId  String
+  gameName String
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   game    Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, gameId])
 }
