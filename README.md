@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Psiko Games
 
-## Getting Started
+## Descripción
+Psiko Games es una plataforma de juegos web desarrollada con Next.js que ofrece una experiencia de juego interactiva con un sistema de autenticación robusto. La plataforma incluye tres juegos clásicos: Wordle, Minesweeper y Memory, y permite a los usuarios registrar sus puntuaciones y competir entre sí.
 
-First, run the development server:
+## Características
+- Sistema de autenticación avanzado con múltiples proveedores (GitHub, Google, Credenciales)
+- Autenticación de dos factores (2FA) para cuentas con credenciales
+- Tres juegos clásicos: Wordle, Minesweeper y Memory
+- Registro y seguimiento de puntuaciones de los usuarios
+- Gestión de perfiles de usuario con opciones de edición personalizadas
+- Diseño responsivo y atractivo utilizando Tailwind CSS
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologías Utilizadas
+- Next.js 14.1.4
+- React 18
+- TypeScript
+- Prisma ORM
+- PostgreSQL (Neon.tech)
+- NextAuth (Auth.js)
+- Tailwind CSS
+- Framer Motion
+- React Hook Form
+- Zod para validación
+- Nodemailer para envío de emails
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demostración en Vivo
+Puedes visitar y probar el proyecto desplegado en la siguiente URL: https://psikogames.vercel.app/
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Uso
+1. Visita la URL del proyecto desplegado.
+2. Regístrate o inicia sesión utilizando GitHub, Google, o creando una cuenta con credenciales.
+3. Explora los diferentes juegos disponibles: Wordle, Minesweeper y Memory.
+4. Juega y compite para obtener las mejores puntuaciones.
+5. Visita tu perfil para ver y editar tu información de usuario.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Estado del Proyecto
+En desarrollo activo. Se planean añadir más juegos y características en el futuro.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contacto
+- GitHub: [Psikxcat](https://github.com/psikxcat)
+- Email: arevalogrichard@gmail.com
+- LinkedIn: [Richard Arevalo](https://www.linkedin.com/in/arevalorichard/)
+- Sitio web: [richardarevalo.netlify.app](https://richardarevalo.netlify.app/)
