@@ -41,4 +41,4 @@ En desarrollo activo. Se planean añadir más juegos y características en el fu
 - GitHub: [Psikxcat](https://github.com/psikxcat)
 - Email: arevalogrichard@gmail.com
 - LinkedIn: [Richard Arevalo](https://www.linkedin.com/in/arevalorichard/)
-- Sitio web: [richardarevalo.netlify.app](https://richardarevalo.netlify.app/)
+- Sitio web: [psikocat.vercel.app](https://psikocat.vercel.app/home)
